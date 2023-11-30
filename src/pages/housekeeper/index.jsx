@@ -8,13 +8,13 @@ export default class Index extends Component {
 
   componentDidShow () {
     const tabbar = Taro.getTabBar(this.pageCtx)
-    tabbar?.setSelected(0)
+    tabbar?.setSelected(2)
   }
 
   render () {
     return (
       <View className='index'>
-        <Text>我是首页！</Text>
+        <Text>我是购物车！</Text>
       </View>
     )
   }
