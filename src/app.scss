@@ -1,1 +1,9 @@
+/* Custom Theme */
+$color-brand: #0028aa;
+$color-brand-light: #405ebf;
+$color-brand-dark: #002088;
+
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 @import "~taro-ui/dist/style/index.scss"; // 引入组件样式，仅需引入一次即可

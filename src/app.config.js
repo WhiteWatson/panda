@@ -1,6 +1,7 @@
 export default defineAppConfig({
   pages: [
     'pages/index/index',
+    'pages/login/index',
     'pages/customer/index',
     'pages/housekeeper/index',
     'pages/contract/index'
@@ -8,7 +9,7 @@ export default defineAppConfig({
   window: {
     backgroundTextStyle: 'light',
     navigationBarBackgroundColor: '#fff',
-    navigationBarTitleText: 'WeChat',
+    navigationBarTitleText: '熊猫',
     navigationBarTextStyle: 'black'
   },
   tabBar: {
