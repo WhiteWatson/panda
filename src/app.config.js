@@ -4,7 +4,8 @@ export default defineAppConfig({
     'pages/login/index',
     'pages/customer/index',
     'pages/housekeeper/index',
-    'pages/contract/index'
+    'pages/contract/index',
+    'pages/agreement/index'
   ],
   window: {
     backgroundTextStyle: 'light',
