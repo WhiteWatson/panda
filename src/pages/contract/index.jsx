@@ -12,7 +12,7 @@ export default function Index () {
   })
 
   return (
-    <View className='index'>
+    <View className="index min-h-[100vh] bg-[#f6f6f6]">
       <Text>我是个人中心！</Text>
     </View>
   )

@@ -7,10 +7,12 @@
   background: white;
   display: flex;
   padding-bottom: env(safe-area-inset-bottom);
+  background: #ffffff;
+  box-shadow: 0px -4px 8px 0px rgba(0, 0, 0, 0.0541);
+  padding-top: 12px;
 }
 
 .tab-bar-border {
-  background-color: rgba(0, 0, 0, 0.33);
   position: absolute;
   left: 0;
   top: 0;
@@ -29,10 +31,12 @@
 }
 
 .tab-bar-item cover-image {
-  width: 54px;
-  height: 54px;
+  width: 50px;
+  height: 50px;
 }
 
 .tab-bar-item cover-view {
-  font-size: 20px;
+  font-size: 22px;
+  font-weight: normal;
+  line-height: 48px;
 }
