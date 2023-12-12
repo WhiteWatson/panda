@@ -1,5 +1,6 @@
 import { defineConfig } from "@tarojs/cli";
 import { UnifiedWebpackPluginV5 } from "weapp-tailwindcss/webpack";
+import path from 'path';
 
 import devConfig from "./dev";
 import prodConfig from "./prod";
@@ -18,6 +19,10 @@ export default defineConfig(async (merge, { command, mode }) => {
     },
     sourceRoot: "src",
     outputRoot: "dist",
+    alias: {
+      '@/components': path.resolve(__dirname, '..', 'src/components'),
+    '@/utils': path.resolve(__dirname, '..', 'src/utils'),
+    },
     plugins: [],
     defineConstants: {},
     copy: {
@@ -26,7 +31,7 @@ export default defineConfig(async (merge, { command, mode }) => {
     },
     framework: "react",
     compiler: {
-      type: 'webpack5',
+      type: "webpack5",
       prebundle: {
         enable: false,
         force: true,

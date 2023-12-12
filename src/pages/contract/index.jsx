@@ -1,12 +1,18 @@
 import { useMemo, useState } from "react";
 import Taro, { useDidShow } from "@tarojs/taro";
-import { View, Text } from "@tarojs/components";
-import { AtSearchBar } from "taro-ui";
+import { View } from "@tarojs/components";
+import { AtSearchBar, AtButton, AtIcon } from "taro-ui";
+import "./index.scss";
 
 import ScreenBar from "./components/ScreenBar";
+import ContractCard from "./components/ContractCard";
 
 export default function Index() {
   const [searchWord, setSearchWord] = useState("");
+  const [contractData, setContractData] = useState([
+    { name: "丫丫" },
+    { name: "笨笨" },
+  ]);
 
   const page = useMemo(() => Taro.getCurrentInstance().page, []);
 
@@ -24,6 +30,16 @@ export default function Index() {
       <AtSearchBar value={searchWord} onChange={onChange} />
       <View>{searchWord}</View>
       <ScreenBar></ScreenBar>
+      <View className="p-[24px]">
+        {contractData.map((item, index) => {
+          return <ContractCard key={index} contractData={item}></ContractCard>;
+        })}
+      </View>
+      <View className="add-btn-box absolute bottom-[300px] right-[30px]">
+        <AtButton className="add-btn rounded-full flex flex-col align-baseline" type="primary" size="small">
+          <AtIcon value="add" size="30" color="#FFFFFF"></AtIcon>
+        </AtButton>
+      </View>
     </View>
   );
 }
