@@ -1,3 +1,4 @@
 import BImage from "./BImage";
+import BInput from "./BInput";
 
-export { BImage };
+export { BImage, BInput };

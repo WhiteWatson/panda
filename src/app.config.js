@@ -1,5 +1,6 @@
 export default defineAppConfig({
   pages: [
+    "pages/addcontract/index",
     "pages/contract/index",
     "pages/index/index",
     "pages/login/index",
