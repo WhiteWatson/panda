@@ -1,3 +1,7 @@
+.index {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
 .at-input {
   margin: 0 15px;
 }

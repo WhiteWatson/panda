@@ -1,8 +1,14 @@
 import { useState } from "react";
 import Taro from "@tarojs/taro";
 import { View, Text, Input, Picker, Button } from "@tarojs/components";
-import { AtButton, AtInput, AtForm, AtSelect, AtRange } from "taro-ui";
+import { AtButton, AtInput, AtForm, AtIcon } from "taro-ui";
 import "./index.scss";
+
+import {
+  contractTypeOption,
+  putUpOption,
+  timedReminderOption,
+} from "./constant";
 
 export default function Index() {
   const [formData, setFormData] = useState({
@@ -40,6 +46,7 @@ export default function Index() {
       name: "contractType",
       title: "合同类型",
       type: "picker",
+      range: contractTypeOption,
       placeholder: "选择合同类型",
       required: true,
     },
@@ -93,6 +100,74 @@ export default function Index() {
   ];
 
   const [formRanderList, setFormRanderList] = useState([]);
+
+  const [addFormBtnList, setAddFormBtnList] = useState([
+    {
+      btnTitle: "备注",
+      name: "remark",
+      title: "备注",
+      type: "text",
+      placeholder: "合同备注，客户不可见",
+    },
+    {
+      btnTitle: "约定定金",
+      name: "earnestMoney",
+      title: "定金(元)",
+      type: "digit",
+      placeholder: "约定客户缴纳的定金",
+    },
+    {
+      btnTitle: "约定尾款",
+      name: "earnestMoney",
+      title: "尾款(元)",
+      type: "digit",
+      placeholder: "约定的客户后期支持的尾款",
+    },
+    {
+      btnTitle: "约定尾款",
+      name: "earnestMoney",
+      title: "尾款(元)",
+      type: "digit",
+      placeholder: "约定的客户后期支持的尾款",
+    },
+    {
+      btnTitle: "住宿情况",
+      name: "putUp",
+      title: "住宿",
+      type: "picker",
+      range: putUpOption,
+      placeholder: "约定的客户后期支持的尾款",
+    },
+    {
+      btnTitle: "预产期",
+      name: "expectedDate",
+      title: "预产期",
+      type: "timepicker",
+      placeholder: "预产期前两周提醒代办",
+    },
+    {
+      btnTitle: "工资发放日",
+      name: "payDay",
+      title: "工资发放日",
+      type: "number",
+      placeholder: "家政员每月工资发放日",
+    },
+    {
+      btnTitle: "定时提醒间隔",
+      name: "timedReminder",
+      title: "定时提醒间隔",
+      range: timedReminderOption,
+      type: "picker",
+      placeholder: "请选择",
+    },
+    {
+      btnTitle: "自定义条款",
+      name: "customTerms",
+      title: "自定义条款",
+      type: "text",
+      placeholder: "模板合同之外，客户要求的自定义的条款内容",
+    },
+  ]);
 
   const [formError, setFormError] = useState({
     phoneNumber: false,
@@ -157,8 +232,18 @@ export default function Index() {
     console.log("提交的表单数据：", formData);
   };
 
+  const handleAddForm = (form) => {
+    // 将 form 添加到 formRanderList 中
+    setFormRanderList((prevList) => [...prevList, form]);
+
+    // 移除 addFormBtnList 中对应的 form
+    setAddFormBtnList((prevBtnList) =>
+      prevBtnList.filter((btn) => btn.name !== form.name)
+    );
+  };
+
   return (
-    <View className="pt-20 px-20 min-h-[100vh] bg-[#f6f6f6]">
+    <View className="index pt-20 px-20 min-h-[100vh] bg-[#f6f6f6]">
       <AtForm className="!bg-transparent" onSubmit={handleSubmit}>
         <View className="mb-20 rounded-[16px] bg-white border border-transparent">
           {topFormRanderList &&
@@ -186,7 +271,7 @@ export default function Index() {
                   <Picker
                     key={item.name}
                     mode="selector"
-                    range={["选项1", "选项2"]}
+                    range={item.range}
                     onChange={(e) =>
                       handleSelectChange(item.name, e.detail.value)
                     }
@@ -198,7 +283,7 @@ export default function Index() {
                         type={item.type}
                         required={item.required}
                         placeholder={item.placeholder}
-                        value={formData[item.name]}
+                        value={item.range[formData[item.name]]}
                         error={formError[item.name]}
                       />
                     </View>
@@ -257,7 +342,7 @@ export default function Index() {
                   <Picker
                     key={item.name}
                     mode="selector"
-                    range={["选项1", "选项2"]}
+                    range={item.range}
                     onChange={(e) =>
                       handleSelectChange(item.name, e.detail.value)
                     }
@@ -269,7 +354,7 @@ export default function Index() {
                         type={item.type}
                         required={item.required}
                         placeholder={item.placeholder}
-                        value={formData[item.name]}
+                        value={item.range[formData[item.name]]}
                         error={formError[item.name]}
                       />
                     </View>
@@ -321,8 +406,25 @@ export default function Index() {
         )}
 
         <View className="mb-[28px]">
-          <View className="text-black/50 text-[24px]">添加以下内容:</View>
-          <View></View>
+          <View className="text-black/50 text-[24px] mb-[24px]">
+            添加以下内容:
+          </View>
+          <View className="flex flex-wrap justify-start">
+            {addFormBtnList &&
+              addFormBtnList.map((item) => (
+                <View className="mr-[10px] mb-[16px]">
+                  <AtButton size="small" onClick={() => handleAddForm(item)}>
+                    <View className="flex items-center">
+                      <AtIcon value="add" size="12" color="#858585"></AtIcon>
+                      {item.btnTitle}
+                    </View>
+                  </AtButton>
+                </View>
+              ))}
+          </View>
+          <View className="text-black/50 text-[24px]">
+            提示：添加合同，将自动在上户前7天，添加一个上户提醒。家政员下户前7天，添加一个合同到期提醒（详见手机软件首页）
+          </View>
         </View>
 
         {/* 提交按钮 */}
