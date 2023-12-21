@@ -1,6 +1,6 @@
 export default defineAppConfig({
   pages: [
-    "pages/addcontract/index",
+    "pages/contractdetail/index",
     "pages/contract/index",
     "pages/index/index",
     "pages/login/index",
@@ -8,6 +8,7 @@ export default defineAppConfig({
     "pages/housekeeper/index",
     "pages/agreement/index",
     "pages/authentication/index",
+    "pages/addcontract/index",
   ],
   window: {
     backgroundTextStyle: "light",
