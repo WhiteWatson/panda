@@ -25,6 +25,12 @@ export default function Index() {
     setSearchWord(value);
   };
 
+  const addContract = () => {
+    Taro.navigateTo({
+      url: "/pages/addcontract/index",
+    });
+  };
+
   return (
     <View className="index min-h-[100vh] bg-[#f6f6f6]">
       <AtSearchBar value={searchWord} onChange={onChange} />
@@ -36,7 +42,12 @@ export default function Index() {
         })}
       </View>
       <View className="add-btn-box absolute bottom-[300px] right-[30px]">
-        <AtButton className="add-btn rounded-full flex flex-col align-baseline" type="primary" size="small">
+        <AtButton
+          className="add-btn rounded-full flex flex-col align-baseline"
+          type="primary"
+          size="small"
+          onClick={() => {addContract()}}
+        >
           <AtIcon value="add" size="30" color="#FFFFFF"></AtIcon>
         </AtButton>
       </View>
