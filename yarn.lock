@@ -1976,6 +1976,15 @@
     "@tarojs/runtime" "3.6.20"
     "@tarojs/shared" "3.6.20"
 
+"@tarojs/api@3.6.22":
+  version "3.6.22"
+  resolved "https://registry.yarnpkg.com/@tarojs/api/-/api-3.6.22.tgz#11c4d122c0ccdb32cecd578f161d9418cf862d57"
+  integrity sha512-OHNZv7f+PidW5kHyxWKtPmiMLhB6MXMWAYDqHZv+anXVdxDJZEkO72F1E1QVCklX7xPlSo3rH6tj1rNxeQyZQA==
+  dependencies:
+    "@babel/runtime" "^7.14.5"
+    "@tarojs/runtime" "3.6.22"
+    "@tarojs/shared" "3.6.22"
+
 "@tarojs/cli@3.6.20":
   version "3.6.20"
   resolved "https://registry.yarnpkg.com/@tarojs/cli/-/cli-3.6.20.tgz#19032b73a8049dd761970e8553af68467f7b79e0"
@@ -2053,6 +2062,39 @@
   version "3.6.20"
   resolved "https://registry.yarnpkg.com/@tarojs/helper/-/helper-3.6.20.tgz#e3e7eeb827a167b4613c00859480b895ef82b299"
   integrity sha512-sKsvv//FR2rfKfg2P+geMc2f69kSSgLpSr3e0B1CnGdzfI9CROVt2SKGo4jcrDVpDuRMbitfX4HsaMalOdzRfQ==
+  dependencies:
+    "@babel/core" "^7.14.5"
+    "@babel/parser" "^7.14.5"
+    "@babel/plugin-proposal-decorators" "^7.14.5"
+    "@babel/plugin-proposal-object-rest-spread" "^7.14.5"
+    "@babel/plugin-transform-runtime" "^7.14.5"
+    "@babel/preset-env" "^7.14.5"
+    "@babel/preset-typescript" "^7.14.5"
+    "@babel/register" "^7.14.5"
+    "@babel/runtime" "^7.14.5"
+    "@babel/traverse" "^7.14.5"
+    "@swc/core" "1.3.96"
+    "@swc/register" "0.1.10"
+    ansi-escapes "^4.3.2"
+    chalk "3.0.0"
+    chokidar "^3.3.1"
+    cross-spawn "^7.0.3"
+    debug "4.3.4"
+    dotenv "^16.0.3"
+    dotenv-expand "^9.0.0"
+    esbuild "~0.19.5"
+    find-yarn-workspace-root "2.0.0"
+    fs-extra "^8.0.1"
+    lodash "^4.17.21"
+    require-from-string "^2.0.2"
+    resolve "^1.22.0"
+    supports-hyperlinks "^2.2.0"
+    yauzl "2.10.0"
+
+"@tarojs/helper@3.6.22":
+  version "3.6.22"
+  resolved "https://registry.yarnpkg.com/@tarojs/helper/-/helper-3.6.22.tgz#2fa6bac69520df670d7be83e3aa0bed6cc6dfd45"
+  integrity sha512-u2hnXcsg4gwF9JKQU4PWwVffUX52CL+7rfJwVZYUm3lgJ4xvbz3i6mYSBEnj+L6VquHnhr/jjPKAbE1ne2dQTA==
   dependencies:
     "@babel/core" "^7.14.5"
     "@babel/parser" "^7.14.5"
@@ -2170,6 +2212,15 @@
     acorn-walk "^8.0.0"
     lodash "^4.17.21"
 
+"@tarojs/plugin-http@^3.6.22":
+  version "3.6.22"
+  resolved "https://registry.yarnpkg.com/@tarojs/plugin-http/-/plugin-http-3.6.22.tgz#8743da80582f5062c3238d180fff0b192a75a4ac"
+  integrity sha512-Sls6OeSfSNcmG9fpHubSnWkApttI4+B4U+whHn43FPdWwlxV7Ko232Pp/R/BEJaBNWVP1/quT8XZLddyuhNw1g==
+  dependencies:
+    "@tarojs/runtime" "3.6.22"
+    "@tarojs/service" "3.6.22"
+    "@tarojs/shared" "3.6.22"
+
 "@tarojs/plugin-platform-alipay@3.6.20":
   version "3.6.20"
   resolved "https://registry.yarnpkg.com/@tarojs/plugin-platform-alipay/-/plugin-platform-alipay-3.6.20.tgz#6759df71580f3617247c3fede1f3e22d18419c8f"
@@ -2277,6 +2328,14 @@
     "@tarojs/shared" "3.6.20"
     lodash-es "4.17.21"
 
+"@tarojs/runtime@3.6.22":
+  version "3.6.22"
+  resolved "https://registry.yarnpkg.com/@tarojs/runtime/-/runtime-3.6.22.tgz#e7d6055215fbd4feb04dda8376ed2bc88e90273d"
+  integrity sha512-D8gDrUeqBGE8+a8oVxEPEc1bczoX5H0P2T6AqS0dbELJQkGKWnBTvdRqyADtQXRKj7HXnCY0FuAhPsI4DFHTgg==
+  dependencies:
+    "@tarojs/shared" "3.6.22"
+    lodash-es "4.17.21"
+
 "@tarojs/service@3.6.20":
   version "3.6.20"
   resolved "https://registry.yarnpkg.com/@tarojs/service/-/service-3.6.20.tgz#4c386fb63fc8b82384e7dede5432af928e109bd9"
@@ -2292,10 +2351,30 @@
     tapable "^1.1.3"
     webpack-merge "^4.2.2"
 
+"@tarojs/service@3.6.22":
+  version "3.6.22"
+  resolved "https://registry.yarnpkg.com/@tarojs/service/-/service-3.6.22.tgz#e0ea8241407d48f3c63f93c1a6fe5b21b09d1e4b"
+  integrity sha512-L5f2H022fIMSxIo0g9AAXZI8gPhwaDDS5lTD8Aawo5Q7ztROda7ml2FPmauK934WKZm2hd4FAnXSUbOcMDp5hA==
+  dependencies:
+    "@tarojs/helper" "3.6.22"
+    "@tarojs/shared" "3.6.22"
+    "@tarojs/taro" "3.6.22"
+    joi "^17.6.0"
+    lodash "^4.17.21"
+    ora "^5.0.0"
+    resolve "^1.22.0"
+    tapable "^1.1.3"
+    webpack-merge "^4.2.2"
+
 "@tarojs/shared@3.6.20":
   version "3.6.20"
   resolved "https://registry.yarnpkg.com/@tarojs/shared/-/shared-3.6.20.tgz#f8f8a4cf46c01e544148a837296df90af748dc77"
   integrity sha512-JYi4T9T1M8foB7jnrWBW+ssOMNqA1eR30aY463zsxFGaeU5bn4qihvCOAo//03szVPN7h7L7k0c1Q4GSSWgLaQ==
+
+"@tarojs/shared@3.6.22":
+  version "3.6.22"
+  resolved "https://registry.yarnpkg.com/@tarojs/shared/-/shared-3.6.22.tgz#ff621cffb18b1c2d62f5b4871ce57e461c6b8c9d"
+  integrity sha512-a6diONs9jVK2BQpu03AO+oa+VWdv54eBoQFMtWTQKP3s6rT0IvRkxIcNbIwOlcyy6MPbLzERt32DIKbm9/IHwg==
 
 "@tarojs/taro-h5@3.6.20":
   version "3.6.20"
@@ -2332,6 +2411,14 @@
   dependencies:
     "@tarojs/api" "3.6.20"
     "@tarojs/runtime" "3.6.20"
+
+"@tarojs/taro@3.6.22":
+  version "3.6.22"
+  resolved "https://registry.yarnpkg.com/@tarojs/taro/-/taro-3.6.22.tgz#45d12765bd174a1d7508c39e5752ef550febc224"
+  integrity sha512-SfmzfAf2JYh4Av4RF2q9WEvgSDDjMjOeQjqCWIsYc36uJCyW+Iq5Is0A7CGWSrnHhjBLpGvv/bHzRwRwCBKilg==
+  dependencies:
+    "@tarojs/api" "3.6.22"
+    "@tarojs/runtime" "3.6.22"
 
 "@tarojs/test-utils-dom@0.1.1":
   version "0.1.1"
@@ -3551,6 +3638,15 @@ aws4@^1.8.0:
   version "1.12.0"
   resolved "https://registry.yarnpkg.com/aws4/-/aws4-1.12.0.tgz#ce1c9d143389679e253b314241ea9aa5cec980d3"
   integrity sha512-NmWvPnx0F1SfrQbYwOi7OeaNGokp9XhzNioJ/CSBs8Qa4vxug81mhJEAVZwxXuBmYB5KDRfMq/F3RR0BIU7sWg==
+
+axios@^1.6.5:
+  version "1.6.5"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-1.6.5.tgz#2c090da14aeeab3770ad30c3a1461bc970fb0cd8"
+  integrity sha512-Ii012v05KEVuUoFWmMW/UQv9aRIc3ZwkWDcM+h5Il8izZCtRVpDUfwpoFf7eOtajT3QiGR4yDUx7lPqHJULgbg==
+  dependencies:
+    follow-redirects "^1.15.4"
+    form-data "^4.0.0"
+    proxy-from-env "^1.1.0"
 
 babel-helper-evaluate-path@^0.5.0:
   version "0.5.0"
@@ -6319,6 +6415,11 @@ follow-redirects@^1.0.0:
   version "1.15.3"
   resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.15.3.tgz#fe2f3ef2690afce7e82ed0b44db08165b207123a"
   integrity sha512-1VzOtuEM8pC9SFU1E+8KfTjZyMztRsgEfwQl44z8A25uy13jSzTj6dyK2Df52iV0vgHCfBwLhDWevLn95w5v6Q==
+
+follow-redirects@^1.15.4:
+  version "1.15.5"
+  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.15.5.tgz#54d4d6d062c0fa7d9d17feb008461550e3ba8020"
+  integrity sha512-vSFWUON1B+yAw1VN4xMfxgn5fTUiaOzAJCKBwIIgT/+7CuGy9+r+5gITvP62j3RmaD5Ph65UaERdOSRGUzZtgw==
 
 for-each@^0.3.3:
   version "0.3.3"
@@ -10284,6 +10385,11 @@ proxy-addr@~2.0.7:
   dependencies:
     forwarded "0.2.0"
     ipaddr.js "1.9.1"
+
+proxy-from-env@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/proxy-from-env/-/proxy-from-env-1.1.0.tgz#e102f16ca355424865755d2c9e8ea4f24d58c3e2"
+  integrity sha512-D+zkORCbA9f1tdWRK0RaCR3GPv50cMxcrz4X8k5LTSUD1Dkw47mKJEZQNunItRTkWwgtaUSo1RVFRIG9ZXiFYg==
 
 prr@~1.0.1:
   version "1.0.1"
