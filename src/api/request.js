@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from 'taro-axios';
 
 // 创建axios实例
 const service = axios.create({

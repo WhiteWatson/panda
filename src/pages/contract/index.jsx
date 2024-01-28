@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Taro, { useDidShow } from "@tarojs/taro";
 import { View } from "@tarojs/components";
 import { AtSearchBar, AtButton, AtIcon } from "taro-ui";
@@ -6,6 +6,7 @@ import "./index.scss";
 
 import ScreenBar from "./components/ScreenBar";
 import ContractCard from "./components/ContractCard";
+import { getContractSelectCondition } from "../../api";
 
 export default function Index() {
   const [searchWord, setSearchWord] = useState("");
@@ -20,6 +21,11 @@ export default function Index() {
     const tabbar = Taro.getTabBar(page);
     tabbar?.setSelected(3);
   });
+
+  useEffect(async () => {
+    const res = await getContractSelectCondition()
+    console.log(res);
+  })
 
   const onChange = (value) => {
     setSearchWord(value);

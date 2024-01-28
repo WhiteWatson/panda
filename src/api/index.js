@@ -1,8 +1,18 @@
 import request from "./request";
 
-export const getUser = (params) => {
+// 登录
+export const login = (params) => {
   return request({
-    url: "/your-endpoint",
+    url: "/login",
+    method: "post",
+    params: params,
+  });
+};
+
+// 各种枚举接口
+export const getContractSelectCondition = (params) => {
+  return request({
+    url: "/getContractSelectCondition",
     method: "get",
     params: params,
   });
