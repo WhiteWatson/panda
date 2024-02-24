@@ -3,9 +3,11 @@ import Taro from "@tarojs/taro";
 import { View, Text, Radio } from "@tarojs/components";
 import { AtButton, AtInput, AtMessage } from "taro-ui";
 import { sendVerification, checkVerificationLogin } from "@/api";
+import { connect } from "react-redux";
+import { updateUserinfo } from "@/store/action/userAction";
 import "./index.scss";
 
-export default class Index extends Component {
+class Index extends Component {
   constructor() {
     super(...arguments);
     this.state = {
@@ -64,12 +66,28 @@ export default class Index extends Component {
   }
 
   async login(userName, verificationCode) {
+    console.log("旧的store", this.props.userInfo); // 使用 this.props.userInfo 访问 Redux 状态
     const { res, isNotValid } = await checkVerificationLogin({
       userName,
       verificationCode,
     });
     if (isNotValid) return;
-    console.log(res);
+    // 更新 Redux Store
+    this.props.updateUserinfo(res.data);
+    // 保存到本地 Storage
+    Taro.setStorage({
+      key: "userInfo",
+      data: res.data,
+    }).then(() => {
+      console.log("用户信息已保存到本地 Storage");
+    });
+    Taro.atMessage({
+      message: "登录成功",
+      type: "success",
+    });
+    Taro.switchTab({
+      url: "/pages/index/index",
+    });
   }
 
   async sendCode(phone) {
@@ -168,3 +186,13 @@ export default class Index extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) => ({
+  userInfo: state.user.userInfo, // 映射 state 到 props
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  updateUserinfo: (userInfo) => dispatch(updateUserinfo(userInfo)), // 映射 dispatch 方法到 props
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Index);
