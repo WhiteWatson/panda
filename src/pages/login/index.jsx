@@ -2,6 +2,7 @@ import { Component } from "react";
 import Taro from "@tarojs/taro";
 import { View, Text, Radio } from "@tarojs/components";
 import { AtButton, AtInput, AtMessage } from "taro-ui";
+import { sendVerification, checkVerificationLogin } from "@/api";
 import "./index.scss";
 
 export default class Index extends Component {
@@ -40,17 +41,53 @@ export default class Index extends Component {
           message: "请完善手机号",
           type: "warning",
         });
-      this.sendCode();
+      this.sendCode(this.state.phone);
+    }
+    if (this.state.btnType === 0) {
+      if (!this.state.phone)
+        return Taro.atMessage({
+          message: "请完善手机号",
+          type: "warning",
+        });
+      if (!this.state.agreement)
+        return Taro.atMessage({
+          message: "请先阅读并勾选协议",
+          type: "warning",
+        });
+      if (!this.state.code)
+        return Taro.atMessage({
+          message: "请填写验证码",
+          type: "warning",
+        });
+      this.login(this.state.phone, this.state.code);
     }
   }
 
-  sendCode() {
+  async login(userName, verificationCode) {
+    const { res, isNotValid } = await checkVerificationLogin({
+      userName,
+      verificationCode,
+    });
+    if (isNotValid) return;
+    console.log(res);
+  }
+
+  async sendCode(phone) {
+    const { res, isNotValid } = await sendVerification({
+      userName: phone,
+    });
+    if (isNotValid)
+      return Taro.showToast({
+        title: res.message,
+        icon: "none",
+        duration: 2000,
+      });
+
     this.setState({
       btnType: 0,
       time: 60,
       isNote: true,
     });
-
     const intervalId = setInterval(() => {
       const time = this.state.time - 1;
       if (time === 0) {

@@ -21,8 +21,10 @@ export default defineConfig(async (merge, { command, mode }) => {
     outputRoot: "dist",
     alias: {
       '@/components': path.resolve(__dirname, '..', 'src/components'),
-    '@/utils': path.resolve(__dirname, '..', 'src/utils'),
+      '@/utils': path.resolve(__dirname, '..', 'src/utils'),
+      '@/api': path.resolve(__dirname, '..', 'src/api'),
     },
+    
     plugins: ['@tarojs/plugin-http'],
     defineConstants: {},
     copy: {

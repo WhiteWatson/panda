@@ -1,45 +1,61 @@
-import axios from 'taro-axios';
+import axios from "taro-axios";
+import Taro from "@tarojs/taro";
 
 // 创建axios实例
 const service = axios.create({
   // API的基础路径，如果请求相同的根路径，可以在这里设置
   baseURL: process.env.TARO_APP_API,
   // 请求超时时间
-  timeout: 5000
+  timeout: 5000,
 });
 
 // 请求拦截器
 service.interceptors.request.use(
-  config => {
+  (config) => {
     // 在发送请求之前做一些处理
     // 如根据你的项目需要设置token，可以在这里设置
     // config.headers['Authorization'] = YOUR_AUTH_TOKEN;
-    
+
     return config;
   },
-  error => {
+  (error) => {
     // 处理请求错误
-    console.error('请求错误：', error);
+    console.error("请求错误：", error);
     return Promise.reject(error);
   }
 );
 
 // 响应拦截器
 service.interceptors.response.use(
-  response => {
+  (response) => {
     // 对响应数据做一些处理
     // 你可以根据你的业务需求来定制
     const res = response.data;
+    let isNotValid = false;
     if (response.status !== 200) {
       // 处理错误响应
-      console.error('响应错误：', res.message);
-      return Promise.reject(new Error(res.message || 'Error'));
+      console.error("响应错误：", res.message);
+      isNotValid = true;
+      Taro.showToast({
+        title: "网络异常",
+        icon: "none",
+        duration: 2000,
+      });
+      return Promise.reject(new Error(res.message || "Error"));
     } else {
-      return res;
+      if (res.code !== 0) {
+        isNotValid = true;
+      }
+      return { res, isNotValid };
     }
   },
-  error => {
-    console.error('响应异常：', error);
+  (error) => {
+    console.error("响应异常：", error);
+    Taro.showToast({
+      title: "网络异常",
+      icon: "none",
+      duration: 2000,
+    });
     return Promise.reject(error);
   }
 );

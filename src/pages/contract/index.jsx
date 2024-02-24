@@ -6,7 +6,7 @@ import "./index.scss";
 
 import ScreenBar from "./components/ScreenBar";
 import ContractCard from "./components/ContractCard";
-import { getContractSelectCondition } from "../../api";
+import { getContractSelectCondition } from "@/api";
 
 export default function Index() {
   const [searchWord, setSearchWord] = useState("");
@@ -23,9 +23,9 @@ export default function Index() {
   });
 
   useEffect(async () => {
-    const res = await getContractSelectCondition()
+    const { res } = await getContractSelectCondition();
     console.log(res);
-  })
+  });
 
   const onChange = (value) => {
     setSearchWord(value);
@@ -52,7 +52,9 @@ export default function Index() {
           className="add-btn rounded-full flex flex-col align-baseline"
           type="primary"
           size="small"
-          onClick={() => {addContract()}}
+          onClick={() => {
+            addContract();
+          }}
         >
           <AtIcon value="add" size="30" color="#FFFFFF"></AtIcon>
         </AtButton>
