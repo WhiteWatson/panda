@@ -25,15 +25,9 @@ export default function Index() {
   });
   useEffect(() => {
     const _callAPI = async () => {
-      const data = await getContractList(
-        {
-          shopFid: userInfo?.shopFids[0],
-        },
-        {
-          Access_Token: userInfo.access_token,
-          Auth,
-        }
-      );
+      const data = await getContractList({
+        shopFid: userInfo?.shopFids[0],
+      });
       console.log("getContractList", data);
       if (data.code === "0") {
         setContractData(data.data.rows);

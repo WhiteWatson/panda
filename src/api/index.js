@@ -38,11 +38,10 @@ export const getContractSelectCondition = (params) => {
 
 //分页查询合同列表
 
-export const getContractList = (params, headers) => {
+export const getContractList = (params) => {
   return request({
     url: "/getContractList",
     method: "post",
     data: params,
-    headers,
   });
 };

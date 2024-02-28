@@ -11,15 +11,14 @@ const service = axios.create({
 
 // 请求拦截器
 service.interceptors.request.use(
-  (config) => {
+  async (config) => {
     // 在发送请求之前做一些处理
     console.log("request info", config);
-    Taro.getStorage({
+    const { data } = await Taro.getStorage({
       key: "userInfo",
-      success: ({ data }) => {
-        config.headers["Access_Token"] = data.access_token;
-      },
     });
+    if (data.access_token) config.headers["Access_Token"] = data.access_token;
+
     return config;
   },
   (error) => {
