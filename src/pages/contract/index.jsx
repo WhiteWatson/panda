@@ -3,10 +3,10 @@ import Taro, { useDidShow } from "@tarojs/taro";
 import { View } from "@tarojs/components";
 import { AtSearchBar, AtButton, AtIcon } from "taro-ui";
 import "./index.scss";
-
+import { useSelector, useDispatch } from "react-redux";
 import ScreenBar from "./components/ScreenBar";
 import ContractCard from "./components/ContractCard";
-import { getContractSelectCondition } from "@/api";
+import { getContractSelectCondition, getContractList } from "@/api";
 
 export default function Index() {
   const [searchWord, setSearchWord] = useState("");
@@ -16,12 +16,33 @@ export default function Index() {
   ]);
 
   const page = useMemo(() => Taro.getCurrentInstance().page, []);
+  const userInfo = useSelector((state) => state.user.userInfo);
 
+  console.log(userInfo, "userInfo");
   useDidShow(() => {
     const tabbar = Taro.getTabBar(page);
     tabbar?.setSelected(3);
   });
-
+  useEffect(() => {
+    const _callAPI = async () => {
+      const data = await getContractList(
+        {
+          shopFid: userInfo?.shopFids[0],
+        },
+        {
+          Access_Token: userInfo.access_token,
+          Auth,
+        }
+      );
+      console.log("getContractList", data);
+      if (data.code === "0") {
+        setContractData(data.data.rows);
+      }
+    };
+    if (userInfo) {
+      _callAPI();
+    }
+  }, [userInfo]);
   useEffect(async () => {
     const { res } = await getContractSelectCondition();
     console.log(res);

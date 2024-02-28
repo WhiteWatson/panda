@@ -18,6 +18,9 @@ class Index extends Component {
       isNote: false,
       time: null,
     };
+    Taro.switchTab({
+      url: "/pages/contract/index",
+    });
   }
 
   handleChange(phone) {
@@ -79,7 +82,7 @@ class Index extends Component {
       key: "userInfo",
       data: res.data,
     }).then(() => {
-      console.log("用户信息已保存到本地 Storage");
+      console.log("用户信息已保存到本地 Storage", res.data);
     });
     Taro.atMessage({
       message: "登录成功",

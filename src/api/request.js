@@ -1,4 +1,4 @@
-import axios from "taro-axios";
+import { axios } from "taro-axios";
 import Taro from "@tarojs/taro";
 
 // 创建axios实例
@@ -13,9 +13,13 @@ const service = axios.create({
 service.interceptors.request.use(
   (config) => {
     // 在发送请求之前做一些处理
-    // 如根据你的项目需要设置token，可以在这里设置
-    // config.headers['Authorization'] = YOUR_AUTH_TOKEN;
-
+    console.log("request info", config);
+    Taro.getStorage({
+      key: "userInfo",
+      success: ({ data }) => {
+        config.headers["Access_Token"] = data.access_token;
+      },
+    });
     return config;
   },
   (error) => {

@@ -2,6 +2,12 @@ import { useState } from "react";
 import Taro from "@tarojs/taro";
 import { View, Text, Input, Picker, Button } from "@tarojs/components";
 import { AtButton, AtInput, AtForm, AtIcon } from "taro-ui";
+import { Popup, Cell } from "@antmjs/vantui";
+// // 引入组件
+// import { Cell } from "@antmjs/vantui/es/cell";
+// // 引入组件对应的样式，若组件没有样式文件，则无须引入
+// import "@antmjs/vantui/es/cell/style";
+import RadioGroup from "../../components/Radio";
 import "./index.scss";
 
 import {
@@ -11,6 +17,7 @@ import {
 } from "./constant";
 
 export default function Index() {
+  const [show, setShow] = useState(false);
   const [formData, setFormData] = useState({
     phoneNumber: "", // 客户手机
     customerName: "", // 客户姓名
@@ -45,7 +52,7 @@ export default function Index() {
     {
       name: "contractType",
       title: "合同类型",
-      type: "picker",
+      type: "contractType",
       range: contractTypeOption,
       placeholder: "选择合同类型",
       required: true,
@@ -65,7 +72,7 @@ export default function Index() {
     },
     {
       name: "servicePersonnel",
-      title: "服务人员",
+      title: "服务人员2",
       type: "link",
       placeholder: "选择服务人员",
       required: true,
@@ -98,9 +105,9 @@ export default function Index() {
       required: true,
     },
   ];
-
+  const servicePersonnelOptions = ["保姆", "厨师", "家政员", "产后修复师"];
   const [formRanderList, setFormRanderList] = useState([]);
-
+  const [checkedValue, setCheckedValue] = useState();
   const [addFormBtnList, setAddFormBtnList] = useState([
     {
       btnTitle: "备注",
@@ -204,32 +211,40 @@ export default function Index() {
       "phoneNumber",
       "customerName",
       "contractType",
-      "contractPeriod",
+      "contractPeriodStart",
+      "contractPeriodEnd",
+      "servicePersonnel",
       "salary",
       "customerServiceFee",
       "housekeepingServiceFee",
     ];
-    const hasError = requiredFields.some((field) => {
+    let hasError = false;
+    requiredFields.forEach((field) => {
       if (!formData[field]) {
+        console.log("必填项：", field, "为空");
+        hasError = true;
         setFormError((prevError) => ({
           ...prevError,
           [field]: true,
         }));
-        return true;
+      } else {
+        setFormError((prevError) => ({
+          ...prevError,
+          [field]: false,
+        }));
       }
-      return false;
     });
+    console.log("提交的表单数据：", formData);
 
     if (hasError) {
       Taro.showToast({
-        title: "请填写必填项",
+        title: "请填写必填项2",
         icon: "none",
       });
       return;
     }
 
     // 处理提交逻辑，可以发送请求等
-    console.log("提交的表单数据：", formData);
   };
 
   const handleAddForm = (form) => {
@@ -313,8 +328,50 @@ export default function Index() {
                   </Picker>
                 );
               } else if (item.type === "link") {
-                // 处理 link 类型的特殊渲染
-                // ...
+                return (
+                  <View key={item.name}>
+                    <Cell
+                      title="服务人员"
+                      isLink
+                      required={item.required}
+                      value={checkedValue}
+                      onClick={() => {}}
+                    />
+                  </View>
+                );
+              } else if (item.type === "contractType") {
+                return (
+                  <View key={item.name}>
+                    <Cell
+                      title="合同类型"
+                      isLink
+                      required={item.required}
+                      value={checkedValue}
+                      onClick={() => setShow(true)}
+                    />
+                    <Popup
+                      position="bottom"
+                      height="200px"
+                      show={show}
+                      onClose={() => setShow(false)}
+                    >
+                      <RadioGroup
+                        name="example"
+                        options={servicePersonnelOptions.map((i) => ({
+                          label: i,
+                          value: i,
+                        }))}
+                        setCheckedValue={(value) => {
+                          handleSelectChange(item.name, value);
+                          setShow(false);
+
+                          setCheckedValue(value);
+                        }}
+                        checkedValue={checkedValue}
+                      />
+                    </Popup>
+                  </View>
+                );
               } else {
                 return (
                   <AtInput
@@ -386,6 +443,27 @@ export default function Index() {
               } else if (item.type === "link") {
                 // 处理 link 类型的特殊渲染
                 // ...
+              } else if (item.type === "cell") {
+                return (
+                  <Picker
+                    key={item.name}
+                    mode="selector"
+                    range={item.range}
+                    onChange={(e) =>
+                      handleSelectChange(item.name, e.detail.value)
+                    }
+                  >
+                    <View>
+                      <Cell
+                        name={item.name}
+                        title={item.title}
+                        type={item.type}
+                        required={item.required}
+                        error={formError[item.name]}
+                      />
+                    </View>
+                  </Picker>
+                );
               } else {
                 return (
                   <AtInput
