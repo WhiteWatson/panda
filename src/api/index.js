@@ -36,29 +36,13 @@ export const getContractSelectCondition = (params) => {
   });
 };
 
-// 分页查询合同列表
-export const getContractList = (params) => {
+//分页查询合同列表
+
+export const getContractList = (params, headers) => {
   return request({
     url: "/getContractList",
     method: "post",
-    params: params,
-  });
-};
-
-// 合同详情接口
-export const getContractDetail = (params) => {
-  return request({
-    url: "/getContractDetail",
-    method: "post",
-    params: params,
-  });
-};
-
-// 家政员列表接口
-export const getHouseKeeperList = (params) => {
-  return request({
-    url: "/getHouseKeeperList",
-    method: "post",
-    params: params,
+    data: params,
+    headers,
   });
 };

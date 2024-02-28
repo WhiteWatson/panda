@@ -40,4 +40,7 @@ export default defineAppConfig({
       },
     ],
   },
+  useExtendedLib: {
+    weui: true,
+  },
 });
