@@ -30,8 +30,8 @@ export const checkVerificationLogin = (params) => {
 // 各种枚举接口
 export const getContractSelectCondition = (params) => {
   return request({
-    url: "/getContractSelectCondition",
-    method: "get",
+    url: "/hkapplet/getContractSelectCondition",
+    method: "post",
     params: params,
   });
 };
@@ -40,7 +40,7 @@ export const getContractSelectCondition = (params) => {
 
 export const getContractList = (params) => {
   return request({
-    url: "/getContractList",
+    url: "/hkapplet/getContractList",
     method: "post",
     data: params,
   });

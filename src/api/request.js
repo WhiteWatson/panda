@@ -14,11 +14,14 @@ service.interceptors.request.use(
   async (config) => {
     // 在发送请求之前做一些处理
     console.log("request info", config);
-    const { data } = await Taro.getStorage({
-      key: "userInfo",
-    });
-    if (data.access_token) config.headers["Access_Token"] = data.access_token;
-
+    try {
+      const userInfo = Taro.getStorageSync("userInfo");
+      if (userInfo) {
+        config.headers["Access-Token"] = userInfo.access_token;
+      }
+    } catch (e) {
+      // Do something when catch error
+    }
     return config;
   },
   (error) => {
