@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Taro from "@tarojs/taro";
 import { View, Text, Input, Picker, Button } from "@tarojs/components";
 import { AtButton, AtInput, AtForm, AtIcon } from "taro-ui";
@@ -8,12 +8,16 @@ import { Popup, Cell } from "@antmjs/vantui";
 // // 引入组件对应的样式，若组件没有样式文件，则无须引入
 // import "@antmjs/vantui/es/cell/style";
 import RadioGroup from "../../components/Radio";
+import { useSelector, useDispatch } from "react-redux";
+import { saveContract } from "@/api";
+
 import "./index.scss";
 
 import {
   contractTypeOption,
   putUpOption,
   timedReminderOption,
+  formAttributeKeyMapper,
 } from "./constant";
 
 export default function Index() {
@@ -30,7 +34,10 @@ export default function Index() {
     customerServiceFee: "", // 客户服务费
     housekeepingServiceFee: "", // 家政员服务费
   });
+  const conditions = useSelector((state) => state.user.conditions);
+  const selectedKeeper = useSelector((state) => state.user.selectedKeeper);
 
+  console.log(selectedKeeper);
   const topFormRanderList = [
     {
       name: "phoneNumber",
@@ -105,7 +112,6 @@ export default function Index() {
       required: true,
     },
   ];
-  const servicePersonnelOptions = ["保姆", "厨师", "家政员", "产后修复师"];
   const [formRanderList, setFormRanderList] = useState([]);
   const [checkedValue, setCheckedValue] = useState();
   const [addFormBtnList, setAddFormBtnList] = useState([
@@ -186,7 +192,7 @@ export default function Index() {
     customerServiceFee: false,
     housekeepingServiceFee: false,
   });
-
+  console.log(formData, "formData");
   const handleInputChange = (key, value) => {
     setFormData({
       ...formData,
@@ -205,7 +211,7 @@ export default function Index() {
     });
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     // 校验必填项
     const requiredFields = [
       "phoneNumber",
@@ -213,7 +219,6 @@ export default function Index() {
       "contractType",
       "contractPeriodStart",
       "contractPeriodEnd",
-      "servicePersonnel",
       "salary",
       "customerServiceFee",
       "housekeepingServiceFee",
@@ -234,17 +239,45 @@ export default function Index() {
         }));
       }
     });
-    console.log("提交的表单数据：", formData);
+    const userInfo = Taro.getStorageSync("userInfo");
+    console.log(userInfo, "uuuuuu");
+    console.log(
+      "提交的表单数据：",
+      formAttributeKeyMapper({
+        ...formData,
+        houseHoldPersonFid: selectedKeeper.fid,
+        houseHoldPersonName: selectedKeeper.name,
+        houseHoldPersonPhone: selectedKeeper.phoneNum,
+        shopFid: userInfo.shopFids[0],
+        customerUid: userInfo.uid,
+      })
+    );
 
     if (hasError) {
       Taro.showToast({
-        title: "请填写必填项2",
+        title: "请填写必填项",
         icon: "none",
       });
       return;
     }
-
-    // 处理提交逻辑，可以发送请求等
+    let { res } = await saveContract(
+      formAttributeKeyMapper({
+        ...formData,
+        houseHoldPersonFid: selectedKeeper.fid,
+        houseHoldPersonName: selectedKeeper.name,
+        houseHoldPersonPhone: selectedKeeper.phoneNum,
+        shopFid: userInfo.shopFids[0],
+        customerUid: userInfo.uid,
+      })
+    );
+    console.log(res, "res");
+    if (res && res.code == "0") {
+      Taro.showToast({
+        title: "保存成功",
+        icon: "success",
+      });
+      Taro.navigateBack();
+    }
   };
 
   const handleAddForm = (form) => {
@@ -256,7 +289,6 @@ export default function Index() {
       prevBtnList.filter((btn) => btn.name !== form.name)
     );
   };
-
   return (
     <View className="index pt-20 px-20 min-h-[100vh] bg-[#f6f6f6]">
       <AtForm className="!bg-transparent" onSubmit={handleSubmit}>
@@ -334,8 +366,8 @@ export default function Index() {
                       title="服务人员"
                       isLink
                       required={item.required}
-                      value={checkedValue}
-                      onClick={() => {}}
+                      value={selectedKeeper?.name}
+                      url="/pages/housekeeper/select?isSelect=true"
                     />
                   </View>
                 );
@@ -346,7 +378,9 @@ export default function Index() {
                       title="合同类型"
                       isLink
                       required={item.required}
-                      value={checkedValue}
+                      value={
+                        conditions?.conTypeCondition?.[checkedValue - 1]?.text
+                      }
                       onClick={() => setShow(true)}
                     />
                     <Popup
@@ -357,9 +391,9 @@ export default function Index() {
                     >
                       <RadioGroup
                         name="example"
-                        options={servicePersonnelOptions.map((i) => ({
-                          label: i,
-                          value: i,
+                        options={conditions?.conTypeCondition?.map((i) => ({
+                          value: i.value,
+                          label: i.text,
                         }))}
                         setCheckedValue={(value) => {
                           handleSelectChange(item.name, value);

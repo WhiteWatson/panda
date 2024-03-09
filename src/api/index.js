@@ -45,3 +45,28 @@ export const getContractList = (params) => {
     data: params,
   });
 };
+
+//人员列表
+
+export const getHouseKeeperList = (params) => {
+  return request({
+    url: "/hkapplet/getHouseKeeperList",
+    method: "post",
+    data: params,
+  });
+};
+
+export const saveContract = (params) => {
+  return request({
+    url: "/hkapplet/saveContract",
+    method: "post",
+    data: params,
+  });
+};
+export const getContractDetail = (params) => {
+  return request({
+    url: "/hkapplet/getContractDetail",
+    method: "post",
+    data: params,
+  });
+};

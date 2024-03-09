@@ -10,3 +10,61 @@ export const timedReminderOption = [
   "20",
   "30",
 ];
+
+/*
+[
+      local: {
+        "phoneNumber",
+      "customerName",
+      "contractType",
+      "contractPeriodStart",
+      "contractPeriodEnd",
+      "salary",
+      "salaryDay",
+      "customerServiceFee",
+      "housekeepingServiceFee",
+      houseHoldPersonFid: selectedKeeper.fid,
+        houseHoldPersonName: selectedKeeper.name,
+        houseHoldPersonPhone: selectedKeeper.phoneNum,
+      }
+    
+    to 
+ 
+    api:
+    "contractType":3,
+    "conSigDate":"2024-01-21",
+    "conStartDate":"2024-01-21",
+    "conEndDate":"2024-02-21",
+    "shopFid":"8a9efe35835e674801835e675c7b0000",
+    "customerUid":"123",
+    "customerName":"张三",
+    "houseHoldPersonFid":"8afecd4083b76e450183b76e58df0000",
+    "houseHoldPersonName":"王亚杰",
+    "houseHoldPersonPhone":"18518500021",
+    "userPhone":"11111111111",
+    "workdays":"28",
+    "monthlySalary":"2000",
+    "servicePrice":"1000",
+    "hkServicePrice":"500"
+}
+
+*/
+export const formAttributeKeyMapper = (local) => {
+  return {
+    contractType: local.contractType,
+    conSigDate: local.contractPeriodStart,
+    conStartDate: local.contractPeriodStart,
+    conEndDate: local.contractPeriodEnd,
+    customerName: local.customerName,
+    houseHoldPersonFid: local.houseHoldPersonFid,
+    houseHoldPersonName: local.houseHoldPersonName,
+    houseHoldPersonPhone: local.houseHoldPersonPhone,
+    userPhone: local.phoneNumber,
+    workdays: local.salaryDay,
+    monthlySalary: local.salary,
+    servicePrice: local.customerServiceFee,
+    hkServicePrice: local.housekeepingServiceFee,
+    shopFid: local.shopFid,
+    customerUid: local.customerUid,
+  };
+};

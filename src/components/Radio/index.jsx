@@ -3,13 +3,13 @@ import { View, Text, Radio, RadioGroup } from "@tarojs/components";
 
 const CustomRadio = ({ label, name, value, checkedValue, setCheckedValue }) => {
   const isChecked = value === checkedValue;
-
   const styles = {
     label: {
       display: "flex",
       alignItems: "center",
+      justifyContent: "center",
       padding: "0.5rem",
-      borderColor: isChecked ? "rgb(16, 185, 129)" : "grey",
+      border: isChecked ? "1px solid #10B981" : "1px solid grey",
       position: "relative",
       cursor: "pointer",
       backgroundColor: "white",
@@ -17,6 +17,8 @@ const CustomRadio = ({ label, name, value, checkedValue, setCheckedValue }) => {
       borderWidth: "0.1rem",
       display: "inline-block",
       minWidth: "3rem",
+      width: "30%",
+      boxSizing: "border-box",
     },
     radio: {
       display: "none",
@@ -25,7 +27,7 @@ const CustomRadio = ({ label, name, value, checkedValue, setCheckedValue }) => {
       position: "absolute",
       bottom: 0,
       right: 0,
-      backgroundColor: "rgb(16, 185, 129)",
+      backgroundColor: "#10B981",
       width: "1.5rem",
       height: "1.5rem",
       color: "white",
@@ -64,18 +66,12 @@ const RadioGroupComponent = ({
   checkedValue,
   setCheckedValue,
 }) => {
-  return (
-    <View
-      style={{
-        display: "flex",
-        flexDirection: "row",
-        flexWrap: "wrap",
-        gap: "1rem",
-        padding: "1rem",
-      }}
-    >
-      <RadioGroup>
-        {options.map((option) => (
+  function renderRadios(line = 3) {
+    const rows = [];
+    for (let i = 0; i < options.length; i += line) {
+      const rowLabels = options
+        .slice(i, i + 3)
+        .map((option) => (
           <CustomRadio
             key={option.value}
             label={option.label}
@@ -84,8 +80,34 @@ const RadioGroupComponent = ({
             checkedValue={checkedValue}
             setCheckedValue={setCheckedValue}
           />
-        ))}
-      </RadioGroup>
+        ));
+      rows.push(
+        <View
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            flexWrap: "wrap",
+            justifyContent: "space-evenly",
+            marginTop: "0.75rem",
+          }}
+        >
+          {rowLabels.length === line
+            ? rowLabels
+            : [
+                rowLabels,
+                <View
+                  key={rowLabels.length + 1}
+                  style={{ width: "30%", visibility: "hidden" }}
+                ></View>,
+              ]}
+        </View>
+      );
+    }
+    return rows;
+  }
+  return (
+    <View className="flex flex-col">
+      <RadioGroup>{renderRadios()}</RadioGroup>
     </View>
   );
 };
