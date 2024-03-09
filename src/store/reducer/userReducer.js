@@ -9,6 +9,8 @@ export default function userReducer(state = INITIAL_STATE, action) {
         ...state,
         userInfo: action.payload
       };
+    case 'SET_USER_LOGOUT':
+      return { ...state, userInfo: null };
     default:
       return state;
   }

@@ -18,9 +18,9 @@ class Index extends Component {
       isNote: false,
       time: null,
     };
-    Taro.switchTab({
-      url: "/pages/contract/index",
-    });
+    // Taro.switchTab({
+    //   url: "/pages/contract/index",
+    // });
   }
 
   handleChange(phone) {

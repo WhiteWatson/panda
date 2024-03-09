@@ -16,9 +16,17 @@ export default function Index() {
   ]);
 
   const page = useMemo(() => Taro.getCurrentInstance().page, []);
-  const userInfo = useSelector((state) => state.user.userInfo);
 
-  console.log(userInfo, "userInfo");
+  // 需要登录才能进入的页面需要加登录态验证逻辑
+  const userInfo = useSelector((state) => state.user.userInfo);
+  useEffect(() => {
+    if (!userInfo) {
+      Taro.redirectTo({
+        url: '/pages/login/index',
+      });
+    }
+  }, [userInfo]);
+
   useDidShow(() => {
     const tabbar = Taro.getTabBar(page);
     tabbar?.setSelected(3);

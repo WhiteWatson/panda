@@ -4,3 +4,7 @@ export const updateUserinfo = (userInfo) => {
     payload: userInfo
   };
 };
+
+export const setUserLogout = () => ({
+  type: 'SET_USER_LOGOUT',
+});
