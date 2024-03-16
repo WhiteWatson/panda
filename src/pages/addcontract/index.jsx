@@ -540,9 +540,11 @@ export default function Index() {
         </View>
 
         {/* 提交按钮 */}
-        <AtButton type="primary" formType="submit">
-          保存
-        </AtButton>
+        <View className="fixed bottom-0 z-10 left-0 right-0 pt-20 px-20 safe-sapce bg-white">
+          <AtButton type="primary" formType="submit">
+            保存
+          </AtButton>
+        </View>
       </AtForm>
     </View>
   );

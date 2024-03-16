@@ -19,6 +19,14 @@ export default function Index() {
 
   // 需要登录才能进入的页面需要加登录态验证逻辑
   const userInfo = useSelector((state) => state.user.userInfo);
+  useEffect(() => {
+    if (!userInfo) {
+      Taro.redirectTo({
+        url: '/pages/login/index',
+      });
+    }
+  }, [userInfo]);
+  
   const dispatch = useDispatch();
   console.log(userInfo, "userInfo");
   useDidShow(() => {
@@ -144,7 +152,6 @@ export default function Index() {
   return (
     <View className="index min-h-[100vh] bg-[#f6f6f6] pb-[150px]">
       <AtSearchBar value={searchWord} onChange={onChange} />
-      <View>{searchWord}</View>
       <ScreenBar
         contractFilter={contractFilter}
         selectConditions={selectConditions}
@@ -158,7 +165,7 @@ export default function Index() {
             );
           })}
       </View>
-      <View className="add-btn-box absolute bottom-[300px] right-[30px]">
+      <View className="add-btn-box fixed bottom-[300px] right-[30px]">
         <AtButton
           className="add-btn rounded-full flex flex-col align-baseline"
           type="primary"

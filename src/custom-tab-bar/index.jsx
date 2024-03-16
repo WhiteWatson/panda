@@ -3,7 +3,7 @@
  */
 import { Component } from "react";
 import Taro from "@tarojs/taro";
-import { CoverView, CoverImage } from "@tarojs/components";
+import { View, Image } from "@tarojs/components";
 
 import "./index.scss";
 
@@ -63,27 +63,27 @@ export default class Index extends Component {
     const { list, selected, color, selectedColor } = this.state;
 
     return (
-      <CoverView className="tab-bar">
-        <CoverView className="tab-bar-border"></CoverView>
+      <View className="tab-bar">
+        <View className="tab-bar-border"></View>
         {list.map((item, index) => {
           return (
-            <CoverView
+            <View
               key={index}
               className="tab-bar-item"
               onClick={this.switchTab.bind(this, index, item.pagePath)}
             >
-              <CoverImage
+              <Image
                 src={selected === index ? item.selectedIconPath : item.iconPath}
               />
-              <CoverView
+              <View
                 style={{ color: selected === index ? selectedColor : color }}
               >
                 {item.text}
-              </CoverView>
-            </CoverView>
+              </View>
+            </View>
           );
         })}
-      </CoverView>
+      </View>
     );
   }
 }

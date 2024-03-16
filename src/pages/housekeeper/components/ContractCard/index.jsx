@@ -9,6 +9,13 @@ export default function Index(props) {
   const dispatch = useDispatch();
   const { keeperList, isSelect } = props;
 
+  const makePhoneCall = () => {
+    keeperList.phoneNum &&
+      Taro.makePhoneCall({
+        phoneNumber: keeperList.phoneNum,
+      });
+  };
+
   return (
     <View
       className="index p-[28px] mb-[22px] bg-white rounded-[16px]"
@@ -80,7 +87,15 @@ export default function Index(props) {
               >
                 分享
               </Button>
-              <Button type="primary">打电话</Button>
+              <Button
+                type="primary"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  makePhoneCall();
+                }}
+              >
+                打电话
+              </Button>
             </View>
           )}
         </View>

@@ -178,8 +178,7 @@ export default function Index() {
         onChange={onChange}
         placeholder="请输入手机号或姓名"
       />
-      <View>{searchWord}</View>
-      <ScreenBar></ScreenBar>
+      {/* <ScreenBar></ScreenBar> */}
       <View className="p-[24px]">
         {keeperList.map((item, index) => {
           return (
@@ -190,18 +189,6 @@ export default function Index() {
             ></ContractCard>
           );
         })}
-      </View>
-      <View className="add-btn-box absolute bottom-[300px] right-[30px]">
-        <AtButton
-          className="add-btn rounded-full flex flex-col align-baseline"
-          type="primary"
-          size="small"
-          onClick={() => {
-            addContract();
-          }}
-        >
-          <AtIcon value="add" size="30" color="#FFFFFF"></AtIcon>
-        </AtButton>
       </View>
     </View>
   );

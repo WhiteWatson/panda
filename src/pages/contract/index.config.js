@@ -1,4 +1,5 @@
 export default definePageConfig({
   navigationBarTitleText: '合同',
-  "usingComponents": {}
+  "usingComponents": {},
+  "wx-safe-area": true,
 })

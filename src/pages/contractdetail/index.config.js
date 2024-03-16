@@ -4,4 +4,5 @@ export default definePageConfig({
   navigationBarBackgroundColor: "#0028AA",
   navigationBarTextStyle: "white",
   usingComponents: {},
+  "wx-safe-area": true,
 });
