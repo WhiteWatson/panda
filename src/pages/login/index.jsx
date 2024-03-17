@@ -104,6 +104,13 @@ class Index extends Component {
         duration: 2000,
       });
 
+    if (res.data)
+      Taro.showToast({
+        title: res.data,
+        icon: "none",
+        duration: 2000,
+      });
+
     this.setState({
       btnType: 0,
       time: 60,

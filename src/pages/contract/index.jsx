@@ -158,7 +158,7 @@ export default function Index() {
         setContractFilter={setContractFilter}
       ></ScreenBar>
       <View className="p-[24px]">
-        {contractData.length &&
+        {contractData.length > 0 &&
           contractData.map((item, index) => {
             return (
               <ContractCard key={index} contractData={item}></ContractCard>

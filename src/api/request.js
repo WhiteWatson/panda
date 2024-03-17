@@ -51,6 +51,11 @@ service.interceptors.response.use(
     } else {
       if (res.code !== 0) {
         isNotValid = true;
+        Taro.showToast({
+          title: res.message,
+          icon: "none",
+          duration: 2000,
+        });
       }
       return { res, isNotValid };
     }
