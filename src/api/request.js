@@ -51,11 +51,17 @@ service.interceptors.response.use(
     } else {
       if (res.code !== 0) {
         isNotValid = true;
-        Taro.showToast({
-          title: res.message,
-          icon: "none",
-          duration: 2000,
-        });
+        if (res.message === "需要登录") {
+          Taro.redirectTo({
+            url: "/pages/login/index",
+          });
+        } else {
+          Taro.showToast({
+            title: res.message,
+            icon: "none",
+            duration: 2000,
+          });
+        }
       }
       return { res, isNotValid };
     }

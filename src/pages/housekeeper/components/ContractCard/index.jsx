@@ -17,12 +17,7 @@ export default function Index(props) {
   };
 
   return (
-    <View
-      className="index p-[28px] mb-[22px] bg-white rounded-[16px]"
-      onClick={() => {
-        !isSelect && Taro.navigateTo({ url: "/pages/contractdetail/index" });
-      }}
-    >
+    <View className="index p-[28px] mb-[22px] bg-white rounded-[16px]">
       <View className="flex align-baseline pb-[20px] border-b-[1px] border-[#979797] border-opacity-10">
         <View className="w-[150px] h-[150px] rounded-[8px] overflow-hidden">
           <BImage

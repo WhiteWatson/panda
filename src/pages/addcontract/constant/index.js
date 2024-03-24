@@ -51,20 +51,56 @@ export const timedReminderOption = [
 */
 export const formAttributeKeyMapper = (local) => {
   return {
-    contractType: local.contractType,
+    // contractType: local.contractType,
+    // customerName: local.customerName,
+    // houseHoldPersonFid: local.houseHoldPersonFid,
+    // houseHoldPersonName: local.houseHoldPersonName,
+    // houseHoldPersonPhone: local.houseHoldPersonPhone,
+    // shopFid: local.shopFid,
+    // customerUid: local.customerUid,
+    ...local,
     conSigDate: local.contractPeriodStart,
     conStartDate: local.contractPeriodStart,
     conEndDate: local.contractPeriodEnd,
-    customerName: local.customerName,
-    houseHoldPersonFid: local.houseHoldPersonFid,
-    houseHoldPersonName: local.houseHoldPersonName,
-    houseHoldPersonPhone: local.houseHoldPersonPhone,
     userPhone: local.phoneNumber,
     workdays: local.salaryDay,
     monthlySalary: local.salary,
     servicePrice: local.customerServiceFee,
     hkServicePrice: local.housekeepingServiceFee,
-    shopFid: local.shopFid,
-    customerUid: local.customerUid,
+    contractPeriodStart: undefined,
+    contractPeriodEnd: undefined,
+    phoneNumber: undefined,
+    salaryDay: undefined,
+    salary: undefined,
+    customerServiceFee: undefined,
+    housekeepingServiceFee: undefined,
   };
+};
+export const formAttributeKeyMapperReverse = (api) => {
+  let _res = {
+    // contractType: api.contractType,
+    // customerName: api.customerName,
+    // houseHoldPersonFid: api.houseHoldPersonFid,
+    // houseHoldPersonName: api.houseHoldPersonName,
+    // houseHoldPersonPhone: api.houseHoldPersonPhone,
+    // shopFid: api.shopFid,
+    // customerUid: api.customerUid,
+    ...api,
+    contractPeriodStart: api.conStartDate,
+    contractPeriodEnd: api.conEndDate,
+    phoneNumber: api.userPhone,
+    salaryDay: api.workdays,
+    salary: api.monthlySalary,
+    customerServiceFee: api.servicePrice,
+    housekeepingServiceFee: api.hkServicePrice,
+    conStartDate: undefined,
+    conEndDate: undefined,
+    userPhone: undefined,
+    workdays: undefined,
+    monthlySalary: undefined,
+    servicePrice: undefined,
+    hkServicePrice: undefined,
+  };
+  console.log(api, _res, "formKeyMapper");
+  return _res;
 };

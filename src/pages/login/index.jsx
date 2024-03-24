@@ -106,7 +106,7 @@ class Index extends Component {
 
     if (res.data)
       Taro.showToast({
-        title: res.data,
+        title: res.data === true ? "验证码已发送" : res.data,
         icon: "none",
         duration: 2000,
       });

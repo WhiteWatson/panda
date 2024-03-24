@@ -1,10 +1,11 @@
 import { getContractDetail } from "@/api";
 import { useEffect, useState } from "react";
 import { View } from "@tarojs/components";
-import { useRouter } from "@tarojs/taro";
+import Taro, { useRouter } from "@tarojs/taro";
 import { AtTabs, AtTabsPane } from "taro-ui";
 import moment from "moment";
 import { Button } from "@antmjs/vantui";
+import { formAttributeKeyMapperReverse } from "../addcontract/constant";
 
 import ElectronicContract from "./components/ElectronicContract";
 import "./index.scss";
@@ -17,7 +18,7 @@ export default function Index() {
 
   console.log(conFid, "conFid");
   // getContractDetail
-  useEffect(() => {
+  Taro.useDidShow(() => {
     async function _callAPI() {
       if (conFid) {
         const { res } = await getContractDetail({ conFid });
@@ -28,7 +29,7 @@ export default function Index() {
       }
     }
     _callAPI();
-  }, [conFid]);
+  });
 
   const tabList = [
     { title: "电子合同" },
@@ -97,7 +98,19 @@ export default function Index() {
             <View className="p-[32px] flex flex-col gap-[32px] bg-white m-[32px] rounded-[8px]">
               <View className="flex justify-between items-center">
                 <View>合同展示内容</View>
-                <Button className="m-0" color="#1d20a4">
+                <Button
+                  className="m-0"
+                  color="#1d20a4"
+                  onClick={() => {
+                    Taro.navigateTo({
+                      url: `/pages/addcontract/index?data=${encodeURIComponent(
+                        JSON.stringify(
+                          formAttributeKeyMapperReverse(contractData)
+                        )
+                      )}`,
+                    });
+                  }}
+                >
                   修改合同
                 </Button>
               </View>

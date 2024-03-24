@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import Taro from "@tarojs/taro";
+import moment from "moment";
+import Taro, { useRouter } from "@tarojs/taro";
 import { View, Text, Input, Picker, Button } from "@tarojs/components";
 import { AtButton, AtInput, AtForm, AtIcon } from "taro-ui";
 import { Popup, Cell } from "@antmjs/vantui";
@@ -21,6 +22,10 @@ import {
 } from "./constant";
 
 export default function Index() {
+  const router = useRouter();
+
+  //修改源数据
+  const [modifyData, setModifyData] = useState({});
   const [show, setShow] = useState(false);
   const [formData, setFormData] = useState({
     phoneNumber: "", // 客户手机
@@ -262,10 +267,13 @@ export default function Index() {
     }
     let { res } = await saveContract(
       formAttributeKeyMapper({
+        ...modifyData,
         ...formData,
-        houseHoldPersonFid: selectedKeeper.fid,
-        houseHoldPersonName: selectedKeeper.name,
-        houseHoldPersonPhone: selectedKeeper.phoneNum,
+        houseHoldPersonFid: selectedKeeper.fid || modifyData.houseHoldPersonFid,
+        houseHoldPersonName:
+          selectedKeeper.name || modifyData.houseHoldPersonName,
+        houseHoldPersonPhone:
+          selectedKeeper.phoneNum || modifyData.houseHoldPersonPhone,
         shopFid: userInfo.shopFids[0],
         customerUid: userInfo.uid,
       })
@@ -289,6 +297,28 @@ export default function Index() {
       prevBtnList.filter((btn) => btn.name !== form.name)
     );
   };
+
+  //修改合同设置默认值
+  useEffect(() => {
+    if (!router.params?.data) return;
+    let jsonString = decodeURIComponent(router.params.data);
+    let data = JSON.parse(jsonString);
+    let finallyData = {
+      ...data,
+      contractPeriodStart: moment(
+        data.contractPeriodStart,
+        "YYYY年M月D日"
+      ).format("YYYY-MM-DD"),
+      contractPeriodEnd: moment(data.contractPeriodEnd, "YYYY年M月D日").format(
+        "YYYY-MM-DD"
+      ),
+    };
+    setModifyData(finallyData);
+    setFormData(finallyData);
+    //设置合同类型
+    setCheckedValue(finallyData.contractType);
+    console.log(finallyData); // 输出的将是你所传递的JSON对象
+  }, [router]);
   return (
     <View className="index pt-20 px-20 min-h-[100vh] bg-[#f6f6f6]">
       <AtForm className="!bg-transparent" onSubmit={handleSubmit}>
@@ -366,7 +396,9 @@ export default function Index() {
                       title="服务人员"
                       isLink
                       required={item.required}
-                      value={selectedKeeper?.name}
+                      value={
+                        selectedKeeper?.name || formData.houseHoldPersonName
+                      }
                       url="/pages/housekeeper/select?isSelect=true"
                     />
                   </View>
