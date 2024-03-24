@@ -14,6 +14,8 @@ import { formAttributeKeyMapperReverse } from "../addcontract/constant";
 export default function Index() {
   const [searchWord, setSearchWord] = useState("");
   const [contractData, setContractData] = useState([]);
+  //filtered contract data
+  const [filteredContractData, setFilteredContractData] = useState([]);
   const [selectConditions, setSelectConditions] = useState({});
   const [contractFilter, setContractFilter] = useState("");
   const page = useMemo(() => Taro.getCurrentInstance().page, []);
@@ -43,6 +45,7 @@ export default function Index() {
       console.log("getContractList", res);
       if (res.code == "0") {
         setContractData(res.data.rows);
+        setFilteredContractData(res.data.rows);
       }
     };
     if (userInfo) {
@@ -68,7 +71,19 @@ export default function Index() {
       url: `/pages/addcontract/index`,
     });
   };
-
+  const filter = (chunk) => {
+    let result = contractData;
+    // if (searchWord) {
+    //   result = result.filter((item) => {
+    //     return item.contractNo.includes(searchWord);
+    //   });
+    // }
+    result = result.filter((item) => {
+      return chunk(item);
+    });
+    console.log(result, "result");
+    setFilteredContractData(result);
+  };
   return (
     <View className="index min-h-[100vh] bg-[#f6f6f6] pb-[150px]">
       <AtSearchBar value={searchWord} onChange={onChange} />
@@ -76,10 +91,11 @@ export default function Index() {
         contractFilter={contractFilter}
         selectConditions={selectConditions}
         setContractFilter={setContractFilter}
+        filter={filter}
       ></ScreenBar>
       <View className="p-[24px]">
-        {contractData.length > 0 &&
-          contractData.map((item, index) => {
+        {filteredContractData.length > 0 &&
+          filteredContractData.map((item, index) => {
             return (
               <ContractCard key={index} contractData={item}></ContractCard>
             );

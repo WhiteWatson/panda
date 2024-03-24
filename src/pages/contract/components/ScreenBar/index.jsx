@@ -6,6 +6,7 @@ export default function Index({
   contractFilter,
   selectConditions,
   setContractFilter,
+  filter,
 }) {
   const statusSelector =
     selectConditions?.conStatusCondition?.map((i) => i.text) || [];
@@ -17,7 +18,10 @@ export default function Index({
 
   console.log(selectConditions, "selectConditions");
   const onChange = (e) => {
-    setStatusSelectorChecked(statusSelector[e.detail.value]);
+    let value = statusSelector[e.detail.value];
+    setStatusSelectorChecked(value);
+    console.log(value, "value");
+    filter((item) => item.contractStateShow === value);
   };
   console.log("screen bar rerender");
   return (
@@ -57,7 +61,20 @@ export default function Index({
             "text-[#0028aa]": contractFilter === "start",
           })}
           onClick={() => {
+            if (contractFilter === "start") {
+              filter(() => true);
+              setContractFilter("");
+
+              return;
+            }
             setContractFilter("start");
+            //conSignDate距当前时间小于一个月
+            filter((item) => {
+              let now = new Date();
+              let signDate = item.conSignDate;
+              let diff = now - signDate;
+              return diff < 30 * 24 * 3600 * 1000;
+            });
             console.log("start change");
           }}
         >
@@ -69,7 +86,21 @@ export default function Index({
             "text-[#0028aa]": contractFilter === "expiring",
           })}
           onClick={() => {
+            if (contractFilter === "expiring") {
+              filter(() => true);
+              setContractFilter("");
+
+              return;
+            }
             setContractFilter("expiring");
+            //conEndDate距当前时间小于一个月
+            filter((item) => {
+              let now = new Date();
+              let endDate = item.conEndDate;
+              let diff = endDate - now;
+              return diff < 30 * 24 * 3600 * 1000;
+            });
+
             console.log("start expiring");
           }}
         >
