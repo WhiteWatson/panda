@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { View, CoverImage, Picker } from "@tarojs/components";
+import Taro from "@tarojs/taro";
 import { Button } from "@antmjs/vantui";
 
 export default function Index() {
@@ -20,7 +21,15 @@ export default function Index() {
             <View className="text-[24px] text-gray-400 mb-[16px]">
               可点击下方签署远程按钮
             </View>
-            <Button className="m-0 mb-[32px]" color="#1d20a4">
+            <Button
+              className="m-0 mb-[32px]"
+              color="#1d20a4"
+              onClick={() => {
+                Taro.navigateTo({
+                  url: `/pages/templatelist/index`,
+                });
+              }}
+            >
               +签署远程电子合同
             </Button>
           </View>

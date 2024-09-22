@@ -1,5 +1,6 @@
 const INITIAL_STATE = {
   userInfo: {},
+  companyInfo: {},
   conditions: {},
   selectedKeeper: {},
 };
@@ -11,6 +12,11 @@ export default function userReducer(state = INITIAL_STATE, action) {
         ...state,
         userInfo: action.payload,
       };
+    case "UPDATE_COM_INFO":
+      return {
+        ...state,
+        companyInfo: action.payload,
+      };
     case "UPDATE_CONDITIONS":
       return {
         ...state,
@@ -21,8 +27,8 @@ export default function userReducer(state = INITIAL_STATE, action) {
         ...state,
         selectedKeeper: action.payload,
       };
-    case 'SET_USER_LOGOUT':
-      return { ...state, userInfo: null };
+    case "SET_USER_LOGOUT":
+      return { ...state, userInfo: null, companyInfo: null };
     default:
       return state;
   }

@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import ScreenBar from "./components/ScreenBar";
 import ContractCard from "./components/ContractCard";
 import { getContractSelectCondition, getContractList } from "@/api";
+
 import { updateConditions } from "@/store/action/userAction";
 import { Button } from "@antmjs/vantui";
 import { formAttributeKeyMapperReverse } from "../addcontract/constant";
@@ -22,6 +23,7 @@ export default function Index() {
 
   // 需要登录才能进入的页面需要加登录态验证逻辑
   const userInfo = useSelector((state) => state.user.userInfo);
+  const companyInfo = useSelector((state) => state.user.companyInfo);
   useEffect(() => {
     if (!userInfo) {
       Taro.redirectTo({
@@ -30,8 +32,16 @@ export default function Index() {
     }
   }, [userInfo]);
 
+  useEffect(() => {
+    if (companyInfo && companyInfo.authStatus === 0) {
+      return Taro.atMessage({
+        message: "未进行企业认证",
+        type: "warning",
+      });
+    }
+  }, [companyInfo]);
+
   const dispatch = useDispatch();
-  console.log(userInfo, "userInfo");
   useDidShow(() => {
     const tabbar = Taro.getTabBar(page);
     tabbar?.setSelected(3);
@@ -42,7 +52,6 @@ export default function Index() {
         shopFid: userInfo?.shopFids[0],
       });
 
-      console.log("getContractList", res);
       if (res.code == "0") {
         setContractData(res.data.rows);
         setFilteredContractData(res.data.rows);
@@ -52,10 +61,8 @@ export default function Index() {
       _callAPI();
     }
   });
-  console.log(contractData);
   useEffect(async () => {
     const { res } = await getContractSelectCondition();
-    console.log(res);
     if (res.code == "0") {
       dispatch(updateConditions(res.data));
       setSelectConditions(res.data);
@@ -81,7 +88,6 @@ export default function Index() {
     result = result.filter((item) => {
       return chunk(item);
     });
-    console.log(result, "result");
     setFilteredContractData(result);
   };
   return (

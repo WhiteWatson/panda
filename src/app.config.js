@@ -10,6 +10,7 @@ export default defineAppConfig({
     "pages/authentication/index",
     "pages/addcontract/index",
     "pages/contractdetail/index",
+    "pages/templatelist/index",
   ],
   window: {
     backgroundTextStyle: "light",

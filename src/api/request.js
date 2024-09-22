@@ -35,7 +35,6 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   (response) => {
     // 对响应数据做一些处理
-    // 你可以根据你的业务需求来定制
     const res = response.data;
     let isNotValid = false;
     if (response.status !== 200) {

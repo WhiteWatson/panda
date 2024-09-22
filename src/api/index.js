@@ -27,6 +27,14 @@ export const checkVerificationLogin = (params) => {
   });
 };
 
+export const getAuthUrlOCorp = (params) => {
+  return request({
+    url: "/hkapplet/getAuthUrlOCorp",
+    method: "post",
+    data: params,
+  });
+};
+
 // 各种枚举接口
 export const getContractSelectCondition = (params) => {
   return request({
@@ -43,6 +51,15 @@ export const getContractList = (params) => {
     url: "/hkapplet/getContractList",
     method: "post",
     data: params,
+  });
+};
+
+//分页查询合同模板列表
+export const getTemplateList = (params) => {
+  return request({
+    url: "/hkapplet/getTemplateList",
+    method: "post",
+    params: params,
   });
 };
 
