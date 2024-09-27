@@ -80,10 +80,29 @@ export const saveContract = (params) => {
     data: params,
   });
 };
+
 export const getContractDetail = (params) => {
   return request({
     url: "/hkapplet/getContractDetail",
     method: "post",
     data: params,
+  });
+};
+
+// 签章
+export const startSignTask = (params) => {
+  return request({
+    url: "hkapplet/startSignTask",
+    method: "post",
+    params: params,
+  });
+};
+
+// 获取预览链接
+export const getTemplatePreviewUrl = (params) => {
+  return request({
+    url: "hkapplet/getTemplatePreviewUrl",
+    method: "post",
+    params: params,
   });
 };

@@ -11,6 +11,7 @@ export default defineAppConfig({
     "pages/addcontract/index",
     "pages/contractdetail/index",
     "pages/templatelist/index",
+    "pages/webviewpage/index",
   ],
   window: {
     backgroundTextStyle: "light",

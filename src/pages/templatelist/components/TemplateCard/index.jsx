@@ -1,20 +1,52 @@
 import { View } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import moment from "moment";
-import { BImage } from "@/components";
+import { useSelector } from "react-redux";
+import { startSignTask, getTemplatePreviewUrl } from "@/api";
 
 export default function Index(props) {
   const { templateData } = props;
-  console.log(templateData, "cccc");
+  const companyInfo = useSelector((state) => state.user.companyInfo);
+
+  const handleSign = async () => {
+    const { res, isNotValid } = await startSignTask({
+      signTemplateId: templateData.signTemplateId,
+      openCorpId: companyInfo?.openCorpId,
+    });
+
+    if (isNotValid) return;
+
+    if (res) {
+      Taro.navigateTo({
+        url: `/pages/webviewpage/index?weburl=${encodeURIComponent(
+          templateData
+        )}`,
+      });
+    }
+  };
+
+  const handlePreview = async () => {
+    const { res, isNotValid } = await getTemplatePreviewUrl({
+      templateId: templateData.signTemplateId,
+      openCorpId: companyInfo?.openCorpId,
+    });
+
+    if (isNotValid) return;
+
+    if (res.data) {
+      Taro.navigateTo({
+        url: `/pages/webviewpage/index?weburl=${encodeURIComponent(
+          res.data
+        )}`,
+      });
+      // Taro.navigateTo({
+      //   url: res.data,
+      // });
+    }
+  };
+
   return (
-    <View
-      className="index p-[28px] mb-[22px] bg-white rounded-[16px]"
-      onClick={() => {
-        Taro.navigateTo({
-          url: `/pages/contractdetail/index?conFid=${templateData.fid}`,
-        });
-      }}
-    >
+    <View className="index p-[28px] mb-[22px] bg-white rounded-[16px]">
       <View className="flex justify-between align-baseline">
         <View className="flex-1 border-b-[1px] border-[#979797] border-opacity-10">
           <View className="flex justify-between mb-[14px]">
@@ -34,7 +66,20 @@ export default function Index(props) {
             )}`}
           </View>
         </View>
-        <View className="flex items-center text-[#0028aa]">
+        <View
+          className="flex pl-[8px] items-center text-[#0028aa]"
+          onClick={() => {
+            handlePreview();
+          }}
+        >
+          预览
+        </View>
+        <View
+          className="flex pl-[8px] items-center text-[#0028aa]"
+          onClick={() => {
+            handleSign();
+          }}
+        >
           去签署
         </View>
       </View>
