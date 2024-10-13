@@ -2,25 +2,47 @@ import { View } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import moment from "moment";
 import { useSelector } from "react-redux";
-import { startSignTask, getTemplatePreviewUrl } from "@/api";
+import { startSignTask, getTemplatePreviewUrl, getActorSignUrl } from "@/api";
+import { useState } from "react";
 
 export default function Index(props) {
   const { templateData } = props;
   const companyInfo = useSelector((state) => state.user.companyInfo);
+  const userInfo = useSelector((state) => state.user.userInfo);
+  const [signTaskId, setSignTaskId] = useState();
+
+  console.log('userInfo',userInfo);
+  
 
   const handleSign = async () => {
     const { res, isNotValid } = await startSignTask({
       signTemplateId: templateData.signTemplateId,
       openCorpId: companyInfo?.openCorpId,
+      signTaskSubject: {},
     });
 
     if (isNotValid) return;
 
-    if (res) {
+    if (res.data) {
+      // Taro.navigateTo({
+      //   url: `/pages/webviewpage/index?weburl=${templateData}`,
+      // });
+      setSignTaskId(res.data);
+      getSignUrl(res.data);
+    }
+  };
+
+  const getSignUrl = async (signTaskId) => {
+    const { res, isNotValid } = await getActorSignUrl({
+      signTaskId: signTaskId,
+      actorId: userInfo?.actorId,
+    });
+
+    if (isNotValid) return;
+
+    if (res.data) {
       Taro.navigateTo({
-        url: `/pages/webviewpage/index?weburl=${encodeURIComponent(
-          templateData
-        )}`,
+        url: `/pages/webviewpage/index?weburl=${res.data}`,
       });
     }
   };
@@ -35,13 +57,8 @@ export default function Index(props) {
 
     if (res.data) {
       Taro.navigateTo({
-        url: `/pages/webviewpage/index?weburl=${encodeURIComponent(
-          res.data
-        )}`,
+        url: `/pages/webviewpage/index?weburl=${res.data}`,
       });
-      // Taro.navigateTo({
-      //   url: res.data,
-      // });
     }
   };
 

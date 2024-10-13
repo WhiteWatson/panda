@@ -27,9 +27,19 @@ export const checkVerificationLogin = (params) => {
   });
 };
 
+// 企业认证接口
 export const getAuthUrlOCorp = (params) => {
   return request({
     url: "/hkapplet/getAuthUrlOCorp",
+    method: "post",
+    data: params,
+  });
+};
+
+// 个人认证接口
+export const getAuthUrlOfUser = (params) => {
+  return request({
+    url: "/hkapplet/getAuthUrlOfUser",
     method: "post",
     data: params,
   });
@@ -106,3 +116,13 @@ export const getTemplatePreviewUrl = (params) => {
     params: params,
   });
 };
+
+// 获取参与方签署链接
+export const getActorSignUrl = (params) => {
+  return request({
+    url: "hkapplet/getActorSignUrl",
+    method: "post",
+    params: params,
+  });
+};
+

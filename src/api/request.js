@@ -15,9 +15,9 @@ service.interceptors.request.use(
     // 在发送请求之前做一些处理
     console.log("request info", config);
     try {
-      const userInfo = Taro.getStorageSync("userInfo");
-      if (userInfo) {
-        config.headers["Access-Token"] = userInfo.access_token;
+      const access_token = Taro.getStorageSync("access_token");
+      if (access_token) {
+        config.headers["Access-Token"] = access_token;
       }
     } catch (e) {
       // Do something when catch error

@@ -6,6 +6,7 @@ import {
   sendVerification,
   checkVerificationLogin,
   getAuthUrlOCorp,
+  getAuthUrlOfUser,
 } from "@/api";
 import { connect } from "react-redux";
 import { updateUserinfo, updateCompanyinfo } from "@/store/action/userAction";
@@ -22,9 +23,6 @@ class Index extends Component {
       isNote: false,
       time: null,
     };
-    // Taro.switchTab({
-    //   url: "/pages/contract/index",
-    // });
   }
 
   handleChange(phone) {
@@ -77,34 +75,49 @@ class Index extends Component {
       verificationCode,
     });
     if (isNotValid) return;
-    // 更新 Redux Store
-    this.props.updateUserinfo(res.data);
-    // 保存到本地 Storage
+    // 保存access_token到Storage，保证后续接口畅通
     Taro.setStorage({
-      key: "userInfo",
-      data: res.data,
-    }).then(() => {
-      console.log("用户信息已保存到本地 Storage", res.data);
+      key: "access_token",
+      data: res.data.access_token,
     });
     this.checkCompany();
-    Taro.atMessage({
-      message: "登录成功",
-      type: "success",
-    });
-    Taro.switchTab({
-      url: "/pages/index/index",
-    });
+    this.checkUser(res.data);
   }
 
   async checkCompany() {
     const { res, isNotValid } = await getAuthUrlOCorp({});
 
     if (isNotValid) return;
-    console.log(res);
     this.props.updateCompanyinfo(res.data);
     Taro.setStorage({
       key: "companyInfo",
       data: res.data,
+    });
+  }
+
+  async checkUser(loginData) {
+    const { res, isNotValid } = await getAuthUrlOfUser({});
+
+    if (isNotValid) return;
+    this.props.updateUserinfo({
+      ...loginData,
+      ...res.data,
+    });
+    Taro.setStorage({
+      key: "userInfo",
+      data: {
+        ...loginData,
+        ...res.data,
+      },
+    }).then(() => {
+      console.log("用户信息已保存到本地 Storage", res.data);
+      Taro.atMessage({
+        message: "登录成功",
+        type: "success",
+      });
+      Taro.switchTab({
+        url: "/pages/index/index",
+      });
     });
   }
 
