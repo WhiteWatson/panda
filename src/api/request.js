@@ -1,6 +1,6 @@
 import { axios } from "taro-axios";
 import Taro from "@tarojs/taro";
-
+import { store } from "../store";
 // 创建axios实例
 const service = axios.create({
   // API的基础路径，如果请求相同的根路径，可以在这里设置
@@ -15,11 +15,15 @@ service.interceptors.request.use(
     // 在发送请求之前做一些处理
     console.log("request info", config);
     try {
-      const access_token = Taro.getStorageSync("access_token");
-      if (access_token) {
-        config.headers["Access-Token"] = access_token;
+      const state = store.getState();
+      const token =
+        state.user.userInfo?.access_token ||
+        Taro.getStorageSync("access_token");
+      if (token) {
+        config.headers["Access-Token"] = token;
       }
     } catch (e) {
+      console.log(e, "interceptors request error");
       // Do something when catch error
     }
     return config;

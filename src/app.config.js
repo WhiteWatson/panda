@@ -46,4 +46,19 @@ export default defineAppConfig({
   useExtendedLib: {
     weui: true,
   },
+  permission: {
+    "scope.infos": {
+      desc: "需要访问外部页面",
+    },
+    networkTimeout: {
+      request: 10000,
+      connectSocket: 10000,
+      uploadFile: 10000,
+      downloadFile: 10000,
+    },
+    //webview domain
+    webview: {
+      url: ["https://80001004.uat-e.fadada.com"],
+    },
+  },
 });

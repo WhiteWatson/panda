@@ -253,7 +253,7 @@ export default function Index() {
         houseHoldPersonFid: selectedKeeper.fid,
         houseHoldPersonName: selectedKeeper.name,
         houseHoldPersonPhone: selectedKeeper.phoneNum,
-        shopFid: userInfo.shopFids[0],
+        shopFid: userInfo.shopFids?.[0],
         customerUid: userInfo.uid,
       })
     );
@@ -274,7 +274,7 @@ export default function Index() {
           selectedKeeper.name || modifyData.houseHoldPersonName,
         houseHoldPersonPhone:
           selectedKeeper.phoneNum || modifyData.houseHoldPersonPhone,
-        shopFid: userInfo.shopFids[0],
+        shopFid: userInfo.shopFids?.[0],
         customerUid: userInfo.uid,
       })
     );

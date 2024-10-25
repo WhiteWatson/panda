@@ -2,15 +2,12 @@ import { useEffect, useMemo, useState } from "react";
 import Taro, { useDidShow } from "@tarojs/taro";
 import { View } from "@tarojs/components";
 import { AtSearchBar, AtButton, AtIcon } from "taro-ui";
-import "./index.scss";
+import { updateConditions } from "@/store/action/userAction";
 import { useSelector, useDispatch } from "react-redux";
+import { getContractSelectCondition, getContractList } from "@/api";
 import ScreenBar from "./components/ScreenBar";
 import ContractCard from "./components/ContractCard";
-import { getContractSelectCondition, getContractList } from "@/api";
-
-import { updateConditions } from "@/store/action/userAction";
-import { Button } from "@antmjs/vantui";
-import { formAttributeKeyMapperReverse } from "../addcontract/constant";
+import "./index.scss";
 
 export default function Index() {
   const [searchWord, setSearchWord] = useState("");
@@ -49,7 +46,7 @@ export default function Index() {
   Taro.useDidShow(() => {
     const _callAPI = async () => {
       const { res } = await getContractList({
-        shopFid: userInfo?.shopFids[0],
+        shopFid: userInfo?.shopFids?.[0],
       });
 
       if (res.code == "0") {

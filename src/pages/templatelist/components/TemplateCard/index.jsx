@@ -1,18 +1,15 @@
 import { View } from "@tarojs/components";
 import Taro from "@tarojs/taro";
-import moment from "moment";
 import { useSelector } from "react-redux";
 import { startSignTask, getTemplatePreviewUrl, getActorSignUrl } from "@/api";
 import { useState } from "react";
+import moment from "moment";
 
 export default function Index(props) {
   const { templateData } = props;
   const companyInfo = useSelector((state) => state.user.companyInfo);
   const userInfo = useSelector((state) => state.user.userInfo);
   const [signTaskId, setSignTaskId] = useState();
-
-  console.log('userInfo',userInfo);
-  
 
   const handleSign = async () => {
     const { res, isNotValid } = await startSignTask({
@@ -32,9 +29,9 @@ export default function Index(props) {
     }
   };
 
-  const getSignUrl = async (signTaskId) => {
+  const getSignUrl = async (_signTaskId) => {
     const { res, isNotValid } = await getActorSignUrl({
-      signTaskId: signTaskId,
+      signTaskId: _signTaskId,
       actorId: userInfo?.actorId,
     });
 
@@ -57,7 +54,7 @@ export default function Index(props) {
 
     if (res.data) {
       Taro.navigateTo({
-        url: `/pages/webviewpage/index?weburl=${res.data}`,
+        url: `/pages/webviewpage/index?weburl=${encodeURIComponent(res.data)}`,
       });
     }
   };

@@ -24,7 +24,18 @@ class Index extends Component {
       time: null,
     };
   }
+  componentDidMount() {
+    //通过redux获取access_token
+    const access_token = this.props.userInfo?.access_token;
+    // const companyInfo = Taro.getStorageSync("companyInfo");
 
+    if (access_token) {
+      //跳转到首页
+      Taro.switchTab({
+        url: "/pages/index/index",
+      });
+    }
+  }
   handleChange(phone) {
     this.setState({
       phone,
@@ -89,6 +100,7 @@ class Index extends Component {
 
     if (isNotValid) return;
     this.props.updateCompanyinfo(res.data);
+
     Taro.setStorage({
       key: "companyInfo",
       data: res.data,

@@ -73,8 +73,16 @@ export const getTemplateList = (params) => {
   });
 };
 
-//人员列表
+//获取预览链接
+export const getPreviewUrl = (params) => {
+  return request({
+    url: "/hkapplet/getTemplatePreviewUrl",
+    method: "post",
+    data: params,
+  });
+};
 
+//人员列表
 export const getHouseKeeperList = (params) => {
   return request({
     url: "/hkapplet/getHouseKeeperList",
