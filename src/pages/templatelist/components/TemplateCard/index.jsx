@@ -6,7 +6,7 @@ import { useState } from "react";
 import moment from "moment";
 
 export default function Index(props) {
-  const { templateData } = props;
+  const { templateData, contractCode } = props;
   const companyInfo = useSelector((state) => state.user.companyInfo);
   const userInfo = useSelector((state) => state.user.userInfo);
   const [signTaskId, setSignTaskId] = useState();
@@ -15,34 +15,35 @@ export default function Index(props) {
     const { res, isNotValid } = await startSignTask({
       signTemplateId: templateData.signTemplateId,
       openCorpId: companyInfo?.openCorpId,
-      signTaskSubject: {},
+      signTaskSubject: '家政保姆合同',
+      contractCode: contractCode
     });
 
     if (isNotValid) return;
 
     if (res.data) {
-      // Taro.navigateTo({
-      //   url: `/pages/webviewpage/index?weburl=${templateData}`,
-      // });
-      setSignTaskId(res.data);
-      getSignUrl(res.data);
-    }
-  };
-
-  const getSignUrl = async (_signTaskId) => {
-    const { res, isNotValid } = await getActorSignUrl({
-      signTaskId: _signTaskId,
-      actorId: userInfo?.actorId,
-    });
-
-    if (isNotValid) return;
-
-    if (res.data) {
+      setSignTaskId(res.data?.signTaskId);
       Taro.navigateTo({
-        url: `/pages/webviewpage/index?weburl=${res.data}`,
+        url: `/pages/webviewpage/index?weburl=${res?.data?.signTaskPreviewUrl}`,
       });
     }
   };
+
+  // const getSignUrl = async (_signTaskId) => {
+  //   const { res, isNotValid } = await getActorSignUrl({
+  //     signTaskId: _signTaskId,
+  //     actorId: userInfo?.actorId,
+  //   });
+
+  //   if (isNotValid) return;
+
+  //   if (res.data) {
+  //     handlePreview();
+  //     // Taro.navigateTo({
+  //     //   url: `/pages/webviewpage/index?weburl=${res.data}`,
+  //     // });
+  //   }
+  // };
 
   const handlePreview = async () => {
     const { res, isNotValid } = await getTemplatePreviewUrl({
@@ -80,14 +81,14 @@ export default function Index(props) {
             )}`}
           </View>
         </View>
-        <View
+        {/* <View
           className="flex pl-[8px] items-center text-[#0028aa]"
           onClick={() => {
             handlePreview();
           }}
         >
           预览
-        </View>
+        </View> */}
         <View
           className="flex pl-[8px] items-center text-[#0028aa]"
           onClick={() => {

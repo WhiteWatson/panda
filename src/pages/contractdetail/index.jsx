@@ -92,7 +92,7 @@ export default function Index() {
           onClick={(value) => handleTabClick(value)}
         >
           <AtTabsPane current={tabCurrent} index={0}>
-            <ElectronicContract></ElectronicContract>
+            <ElectronicContract contractData={contractData}></ElectronicContract>
           </AtTabsPane>
           <AtTabsPane current={tabCurrent} index={1}>
             <View className="p-[32px] flex flex-col gap-[32px] bg-white m-[32px] rounded-[8px]">

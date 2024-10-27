@@ -108,21 +108,20 @@ class Index extends Component {
   }
 
   async checkUser(loginData) {
-    const { res, isNotValid } = await getAuthUrlOfUser({});
+    // const { res, isNotValid } = await getAuthUrlOfUser({});
 
-    if (isNotValid) return;
+    // if (isNotValid) return;
     this.props.updateUserinfo({
       ...loginData,
-      ...res.data,
+      // ...res.data,
     });
     Taro.setStorage({
       key: "userInfo",
       data: {
         ...loginData,
-        ...res.data,
+        // ...res.data,
       },
     }).then(() => {
-      console.log("用户信息已保存到本地 Storage", res.data);
       Taro.atMessage({
         message: "登录成功",
         type: "success",

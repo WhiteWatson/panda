@@ -3,7 +3,8 @@ import { View, CoverImage, Picker } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import { Button } from "@antmjs/vantui";
 
-export default function Index() {
+export default function Index(props) {
+  const {contractData} = props;
   const [selector] = useState(["美国", "中国", "巴西", "日本"]);
   const [selectorChecked, setSelectorChecked] = useState("");
 
@@ -26,7 +27,7 @@ export default function Index() {
               color="#1d20a4"
               onClick={() => {
                 Taro.navigateTo({
-                  url: `/pages/templatelist/index`,
+                  url: `/pages/templatelist/index?contractCode=${contractData?.contractCode}`,
                 });
               }}
             >

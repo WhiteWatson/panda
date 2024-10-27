@@ -112,7 +112,7 @@ export const startSignTask = (params) => {
   return request({
     url: "hkapplet/startSignTask",
     method: "post",
-    params: params,
+    data: params,
   });
 };
 

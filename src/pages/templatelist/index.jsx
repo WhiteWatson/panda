@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import Taro, { useDidShow } from "@tarojs/taro";
+import Taro, { useRouter } from "@tarojs/taro";
 import { getTemplateList } from "@/api";
 import { View } from "@tarojs/components";
 import { useSelector } from "react-redux";
@@ -19,6 +19,10 @@ export default function Index() {
     }
     console.log(userInfo);
   }, [userInfo]);
+
+  const router = useRouter();
+  let contractCode = decodeURIComponent(router.params.contractCode);
+  
 
   useEffect(() => {
     if (companyInfo && companyInfo.authStatus === 0) {
@@ -53,7 +57,7 @@ export default function Index() {
         {templatetData?.length > 0 &&
           templatetData.map((item, index) => {
             return (
-              <TemplateCard key={index} templateData={item}></TemplateCard>
+              <TemplateCard key={index} templateData={item} contractCode={contractCode}></TemplateCard>
             );
           })}
       </View>
