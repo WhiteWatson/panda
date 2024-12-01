@@ -24,7 +24,7 @@ export default function Index(props) {
     if (res.data) {
       setSignTaskId(res.data?.signTaskId);
       Taro.navigateTo({
-        url: `/pages/webviewpage/index?weburl=${res?.data?.signTaskPreviewUrl}`,
+        url: `/pages/webviewpage/index?weburl=${encodeURIComponent(res?.data?.signTaskPreviewUrl)}`,
       });
     }
   };

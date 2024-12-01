@@ -51,9 +51,7 @@ export default class Index extends Component {
     });
   }
 
-  onSubmit(event) {
-    console.log(this.state);
-  }
+  onSubmit(event) {}
   onReset(event) {
     this.setState({
       value: "",

@@ -134,3 +134,11 @@ export const getActorSignUrl = (params) => {
   });
 };
 
+// 获取参与方签署链接
+export const getConSignList = (params) => {
+  return request({
+    url: "hkapplet/getConSignList",
+    method: "post",
+    data: params,
+  });
+};

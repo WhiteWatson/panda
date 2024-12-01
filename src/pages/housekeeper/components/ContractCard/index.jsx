@@ -55,7 +55,6 @@ export default function Index(props) {
             <Button
               type="primary"
               onClick={() => {
-                console.log("确认");
                 let info = {
                   fid: keeperList.fid,
                   name: keeperList.name,
@@ -77,7 +76,6 @@ export default function Index(props) {
                 hairline
                 type="primary"
                 onTap={() => {
-                  console.log("1111");
                 }}
               >
                 分享

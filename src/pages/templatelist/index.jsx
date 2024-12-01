@@ -41,7 +41,6 @@ export default function Index() {
           Taro.getStorageSync("companyInfo")?.openCorpId,
       });
 
-      console.log("getTemplateList", res);
       if (res.code == "0") {
         setTemplateData(res.data);
       }

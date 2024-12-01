@@ -16,14 +16,11 @@ export default function Index({
   const [statusSelectorChecked, setStatusSelectorChecked] = useState("");
   const [contractSelectorChecked, setContractSelectorChecked] = useState("");
 
-  console.log(selectConditions, "selectConditions");
   const onChange = (e) => {
     let value = statusSelector[e.detail.value];
     setStatusSelectorChecked(value);
-    console.log(value, "value");
     filter((item) => item.contractStateShow === value);
   };
-  console.log("screen bar rerender");
   return (
     <View className="index flex justify-between py-[20px] px-[30px] bg-white border-t border-[#979797] border-opacity-10">
       <View>筛选:</View>
@@ -75,7 +72,6 @@ export default function Index({
               let diff = now - signDate;
               return diff < 30 * 24 * 3600 * 1000;
             });
-            console.log("start change");
           }}
         >
           刚签约
@@ -101,7 +97,6 @@ export default function Index({
               return diff < 30 * 24 * 3600 * 1000;
             });
 
-            console.log("start expiring");
           }}
         >
           快到期

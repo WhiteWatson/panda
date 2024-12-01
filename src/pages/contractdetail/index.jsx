@@ -16,8 +16,6 @@ export default function Index() {
   const router = useRouter();
   let conFid = router.params.conFid;
 
-  console.log(conFid, "conFid");
-  // getContractDetail
   Taro.useDidShow(() => {
     async function _callAPI() {
       if (conFid) {
@@ -25,7 +23,6 @@ export default function Index() {
         if (res && res.code == "0") {
           setContractData(res.data);
         }
-        console.log("getContractDetail", res);
       }
     }
     _callAPI();

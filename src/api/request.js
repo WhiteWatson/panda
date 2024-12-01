@@ -13,7 +13,6 @@ const service = axios.create({
 service.interceptors.request.use(
   async (config) => {
     // 在发送请求之前做一些处理
-    console.log("request info", config);
     try {
       const state = store.getState();
       const token =
@@ -23,7 +22,7 @@ service.interceptors.request.use(
         config.headers["Access-Token"] = token;
       }
     } catch (e) {
-      console.log(e, "interceptors request error");
+      console.error(e, "interceptors request error");
       // Do something when catch error
     }
     return config;

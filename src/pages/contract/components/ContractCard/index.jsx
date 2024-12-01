@@ -5,7 +5,6 @@ import { BImage } from "@/components";
 
 export default function Index(props) {
   const { contractData } = props;
-  console.log(contractData, "cccc");
   return (
     <View
       className="index p-[28px] mb-[22px] bg-white rounded-[16px]"
@@ -33,7 +32,7 @@ export default function Index(props) {
             </View>
           </View>
           <View className="text-[26px] text-black/50 mb-[8px]">
-            工资：8000元，客户服务费：4000元
+            {`工资：${contractData.monthlySalary}元，客户服务费：${contractData.servicePrice}元`}
           </View>
           <View className="text-[26px] text-black/50">
             {moment(contractData.conStartDate).format("YYYY-MM-DD") +

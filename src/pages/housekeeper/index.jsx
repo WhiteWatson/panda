@@ -16,7 +16,6 @@ export default function Index() {
   const page = useMemo(() => Taro.getCurrentInstance().page, []);
   const userInfo = useSelector((state) => state.user.userInfo);
 
-  console.log(userInfo, "userInfo");
   useDidShow(() => {
     const tabbar = Taro.getTabBar(page);
     tabbar?.setSelected(2);
