@@ -134,10 +134,19 @@ export const getActorSignUrl = (params) => {
   });
 };
 
-// 获取参与方签署链接
+// 获取签署链接
 export const getConSignList = (params) => {
   return request({
     url: "hkapplet/getConSignList",
+    method: "post",
+    data: params,
+  });
+};
+
+// 发送签署链接给客户or阿姨
+export const sendActorSignUrl = (params) => {
+  return request({
+    url: "hkapplet/sendActorSignUrl",
     method: "post",
     data: params,
   });
